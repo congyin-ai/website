@@ -1,6 +1,6 @@
-# Xanadu-web
+# Congin
 
-node.js 版本推荐14
+node.js 14
 ## 安装依赖
 ```
 npm install
@@ -15,9 +15,3 @@ npm run dev
 ```
 npm run build
 ```
-
-
-### 构建时特殊依赖包
-image-webpack-loader使用 npm install 容易安装失败，导致导包构建失败
-最终选择移除image-webpack-loader
-## Over!

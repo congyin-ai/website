@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import AwHeader from '../../components/web/public/Header'
-import AwFooter from '../../components/web/public/Footer'
-import CheckboxAndDropdown from '../../components/web/CheckboxAndDropdown'
+import AwHeader from '@/components/web/public/Header'
+import AwFooter from '@/components/web/public/Footer'
+import CheckboxAndDropdown from '@/components/web/CheckboxAndDropdown'
 // import CheckboxTransfer from '../../components/web/Checkbox-Transfer'
 
 export default {

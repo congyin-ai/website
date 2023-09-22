@@ -16,10 +16,11 @@ const routes = [
   {
     path: '/research',
     name: 'research',
+    component:()=>import(/* webpackChunkName: "news" */ '../views/web/research'),
     children: [
-      { path: 'academic', component: () => import(/* webpackChunkName: "news" */ '../views/web/news.vue') },
-      { path: 'product', component: () => import(/* webpackChunkName: "news" */ '../views/web/news.vue') },
-      { path:'experience',component: () => import(/* webpackChunkName: "news" */ '../views/web/news.vue')}
+      { path: 'academic', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/academic.vue') },
+      { path: 'products', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/products.vue')},
+      { path:'experience',component: () => import(/* webpackChunkName: "news" */ '../views/web/research/experience.vue')}
     ]
   },
   {
@@ -30,10 +31,11 @@ const routes = [
   {
     path: '/us',
     name: 'us',
+    component:() => import(/* webpackChunkName: "news" */ '../views/web/us'),
     children: [
-      { path: 'cominfo', component: () => import(/* webpackChunkName: "news" */ '../views/web/news.vue') },
-      { path: 'partner', component: () => import(/* webpackChunkName: "news" */ '../views/web/news.vue') },
-      { path:'joinus',component: () => import(/* webpackChunkName: "news" */ '../views/web/news.vue')}
+      { path: 'cominfo', component: () => import(/* webpackChunkName: "news" */ '../views/web/us/cominfo.vue') },
+      { path: 'partners', component: () => import(/* webpackChunkName: "news" */ '../views/web/us/partners.vue') },
+      { path:'joinus',component: () => import(/* webpackChunkName: "news" */ '../views/web/us/joinus.vue')}
     ]
   },
   {
@@ -44,7 +46,7 @@ const routes = [
   {
     path: '/lang',
     name: 'lang',
-    component: () => import(/* webpackChunkName: "login" */ '../views/web/index.vue')
+    component: () => import(/* webpackChunkName: "login" */ '../views/web/lang.vue')
   },
   {
     path: '*',
@@ -57,6 +59,8 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
+  // console.log(`output->to`, to)
+  // console.log(`output->from`,from)
   // 网站统计
   /* eslint-disable */
   if (_hmt) {

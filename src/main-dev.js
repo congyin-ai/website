@@ -14,6 +14,7 @@ import './assets/style/common.css'
 import './assets/font/iconfont'
 // import animated from 'animate.css'
 import VueScrollTo from 'vue-scrollto'
+
 // 网站统计
 /* eslint-disable */
 var _hmt = _hmt || []
@@ -30,6 +31,7 @@ Vue.use(ElementUI)
 // Vue.use(animated)
 Vue.use(VueScrollTo)
 Vue.component('mavon-editor', mavonEditor)
+
 // 默认选项
 Vue.use(VueScrollTo, {
   container: 'body',

@@ -25,15 +25,15 @@
             :router="true"
           >
             <el-menu-item index="/">首页</el-menu-item>
-            <el-submenu index="/research/product">
+            <el-submenu index="/research/products">
               <template slot="title">研究</template>
               <el-menu-item index="/research/academic" class="item"
                 >科研</el-menu-item
               >
-              <el-menu-item index="/research/product" class="item"
+              <el-menu-item index="/research/products" class="item"
                 >产品介绍</el-menu-item
               >
-              <el-menu-item index="/research/experiment" class="item"
+              <el-menu-item index="/research/experience" class="item"
                 >体验</el-menu-item
               >
             </el-submenu>
@@ -43,7 +43,7 @@
               <el-menu-item index="/us/cominfo" class="item"
                 >公司简介</el-menu-item
               >
-              <el-menu-item index="/us/partner" class="item"
+              <el-menu-item index="/us/partners" class="item"
                 >合作伙伴</el-menu-item
               >
               <el-menu-item index="/us/joinus" class="item"
@@ -147,16 +147,11 @@ export default {
       "headerLogoShow",
       "navDarkActive",
     ]),
-    hasChildren() {
-      return this.menuData.filter((item) => item.children);
-    },
-    noChildren() {
-      return this.menuData.filter((item) => !item.children);
-    },
   },
 
   mounted() {},
-  methods: {},
+  methods: {
+  },
 };
 </script>
 

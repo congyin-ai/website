@@ -26,23 +26,6 @@ export default {
 }
 </script>
 
-// <style lang="less">
-// .el-popper{
-//   .el-menu--horizontal{
-//     .el-menu--popup{
-//       background-color:red ;//这里设置成自己想要的颜色即可
-//       .el-menu-item{
-//         background-color:blue ;//这里设置成自己想要的颜色即可
-//       }
-//     }
-//     .el-menu--popup-bottom-start{
-//       
-//     }
-//   }
-// }
-
-// </style>
-
 <style lang = "less" scoped>
 .icon {
   width: 1.3em;

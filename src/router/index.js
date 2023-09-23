@@ -18,9 +18,9 @@ const routes = [
     name: 'research',
     component:()=>import(/* webpackChunkName: "news" */ '../views/web/research'),
     children: [
-      { path: 'academic', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/academic.vue') },
-      { path: 'products', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/products.vue')},
-      { path:'experience',component: () => import(/* webpackChunkName: "news" */ '../views/web/research/experience.vue')}
+      { name:"academic",path: 'academic', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/academic.vue') },
+      { name:'products',path: 'products', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/products.vue')},
+      { name:"experience",path:'experience',component: () => import(/* webpackChunkName: "news" */ '../views/web/research/experience.vue')}
     ]
   },
   {
@@ -33,9 +33,9 @@ const routes = [
     name: 'us',
     component:() => import(/* webpackChunkName: "news" */ '../views/web/us'),
     children: [
-      { path: 'cominfo', component: () => import(/* webpackChunkName: "news" */ '../views/web/us/cominfo.vue') },
-      { path: 'partners', component: () => import(/* webpackChunkName: "news" */ '../views/web/us/partners.vue') },
-      { path:'joinus',component: () => import(/* webpackChunkName: "news" */ '../views/web/us/joinus.vue')}
+      { name:"cominfo", path: 'cominfo', component: () => import(/* webpackChunkName: "news" */ '../views/web/us/cominfo.vue') },
+      { name:"partners",path: 'partners', component: () => import(/* webpackChunkName: "news" */ '../views/web/us/partners.vue') },
+      { name:"joinus",path:'joinus',component: () => import(/* webpackChunkName: "news" */ '../views/web/us/joinus.vue')}
     ]
   },
   {
@@ -59,8 +59,6 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  // console.log(`output->to`, to)
-  // console.log(`output->from`,from)
   // 网站统计
   /* eslint-disable */
   if (_hmt) {

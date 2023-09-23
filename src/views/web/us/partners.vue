@@ -13,6 +13,8 @@
           <div class="c" style="--i: 0"></div>
           <div class="d" style="--i: 1"></div>
           <div class="e" style="--i: 2"></div>
+          <div class="f" style="--i: 3"></div>
+          <div class="g" style="--i: 4"></div>
         </div>
       </div>
     </div>
@@ -47,9 +49,7 @@ export default {
   margin-top: 0;
   //border-bottom: 1px solid #eff0f1;
 }
-body {
-  background-color: rgb(154, 133, 250);
-}
+
 .a {
   position: relative;
   perspective: 1600px;
@@ -59,6 +59,7 @@ body {
   align-items: center;
 }
 .b {
+
   width: 400px;
   height: 250px;
   position: absolute;
@@ -66,35 +67,76 @@ body {
   animation: a 8s infinite cubic-bezier(0.7, 0, 0.17, 1);
 }
 .b div {
+  
   position: absolute;
-  background-size: cover;
+  background-size: 100%;
   opacity: 0.9;
   width: 400px;
   height: 250px;
-  transform: rotateY(calc(var(--i) * 120deg)) translateZ(600px);
+  transform: rotateY(calc(var(--i) * 72deg)) translateZ(600px);
 }
 @keyframes a {
-  0% {
+    0% {
     transform: translateZ(-100px) rotateY(0);
   }
-  33% {
-    transform: translateZ(-100px) rotateY(-120deg);
+  20% {
+    transform: translateZ(-100px) rotateY(-72deg);
   }
-  66% {
-    transform: translateZ(-100px) rotateY(-240deg);
+  40% {
+    transform: translateZ(-100px) rotateY(-144deg);
+  }
+  60% {
+    transform: translateZ(-100px) rotateY(-216deg);
+  }
+  80% {
+    transform: translateZ(-100px) rotateY(-288deg);
   }
   100% {
     transform: translateZ(-100px) rotateY(-360deg);
   }
+  // 0% {
+  //   transform: translateZ(-100px) rotateY(0);
+  // }
+  // 33% {
+  //   transform: translateZ(-100px) rotateY(-120deg);
+  // }
+  // 66% {
+  //   transform: translateZ(-100px) rotateY(-240deg);
+  // }
+  // 100% {
+  //   transform: translateZ(-100px) rotateY(-360deg);
+  // }
 }
 .c {
-  background-image: url("xipu.png");
+  background-image: url("../../../assets/img/carousel/app1.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  // width: auto;
 }
 .d {
-  background-image: url("app1.jpg");
+  background-image: url("../../../assets/img/carousel/app2.png");
+    background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
 }
 .e {
-  background-image: url("app1.jpg");
+  background-image: url("../../../assets/img/carousel/app3.png");
+    background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+.f{
+  background-image: url("../../../assets/img/carousel/app4.png");
+    background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+.g{
+  background-image: url("../../../assets/img/carousel/app5.png");
+    background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
 }
 .website{
   font-weight:400 ;

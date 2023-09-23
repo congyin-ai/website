@@ -16,7 +16,7 @@ export function getDetailedPaper(query){
     })
 }
 
-export function listPaper(query) {
+export function listPaper() {
   return instance({
     method: 'post',
     headers: { 
@@ -24,7 +24,6 @@ export function listPaper(query) {
    },
     // dataType: 'json',
     url: '/thesis/list',
-    data: JSON.stringify(query),
   })
 }
 

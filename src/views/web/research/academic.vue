@@ -52,8 +52,7 @@
         class="paper"
       >
         <el-table-column prop="title" label="Title"> </el-table-column>
-        <el-table-column prop="postedTime" label="PostTime">
-        </el-table-column>
+        <el-table-column prop="postedTime" label="PostTime"> </el-table-column>
         <el-table-column label="Details">
           <template slot-scope="scope">
             <el-popover
@@ -62,17 +61,20 @@
               trigger="click"
               transition="fade-in-linear"
             >
-            <el-form class="detailpane">
-              <div>Introduce</div>
-              <el-form-item>{{detail.intro}}</el-form-item>
-              <div>Address</div>
-              <el-form-item>{{detail.address}}</el-form-item>
-
-            </el-form>
-              <el-button @click="handleClick(scope.row)" slot="reference" type="text" size="small"
-              >详情</el-button>
+              <el-form class="detailpane">
+                <div>Introduce</div>
+                <el-form-item>{{ detail.intro }}</el-form-item>
+                <div>Address</div>
+                <el-form-item>{{ detail.address }}</el-form-item>
+              </el-form>
+              <el-button
+                @click="handleClick(scope.row)"
+                slot="reference"
+                type="text"
+                size="small"
+                >详情</el-button
+              >
             </el-popover>
-            
           </template>
         </el-table-column>
       </el-table>
@@ -80,7 +82,8 @@
         <el-pagination
           layout="prev, pager, next"
           :total="total"
-          @current-change="getPaperList"
+          @current-change="pageData"
+          :page-size="pageSize"
         >
         </el-pagination>
       </div>
@@ -102,36 +105,35 @@ export default {
   data() {
     return {
       total: 30,
-      queryParams: {
-        current: 1,
-        size: 5,
-      },
+      current:1,
+      pageSize:5,
       detail: {
         address: "http://iuiqqmr.ec/tlemlc",
-        intro: "务山养第证分思果油社改山取也示事。称群表八广习时通清百志属打。而住阶全联严装干开包生周改立济。阶单品值军世方无因山市义反置重过光。再素质使强号阶们包取子半局门单。海起资照快这府作东合步料容度温但据。",
+        intro:
+          "务山养第证分思果油社改山取也示事。称群表八广习时通清百志属打。而住阶全联严装干开包生周改立济。阶单品值军世方无因山市义反置重过光。再素质使强号阶们包取子半局门单。海起资照快这府作东合步料容度温但据。",
       },
       query: "",
       loading: false,
       showSlogan: false,
       queryData: [],
-      paperData: [
-        
-      ],
+      paperData: [],
     };
   },
   methods: {
     querySelect(e) {
       if (this.query == "") {
-        this.queryData = this.paperData;
-      }else {
-        if(this.queryData.length==0){this.queryData = this.paperData}
-          this.queryData = this.queryData.filter((item) =>
-          item.title.toLowerCase().includes(this.query.toLowerCase()));
+        this.queryData = this.paperData.slice(0, 5);;
+      } else {
+        if (this.queryData.length == 0) {
+          this.queryData = this.paperData.slice(0, 5);;
+        }
+        this.queryData = this.paperData.filter((item) =>
+          item.title.toLowerCase().includes(this.query.toLowerCase())
+        );
       }
     },
     handleClick(row) {
-      // console.log(`output->'click'`,'click')
-      getDetailedPaper(row.id).then(res => {
+      getDetailedPaper(row.id).then((res) => {
         console.log(`output->res`, res);
         if (res.code == 200) {
           this.detail = res.data.result;
@@ -140,13 +142,18 @@ export default {
         }
       });
     },
-    getPaperList(current) {
-      this.queryParams.current = current;
+    pageData(current) {
+        var start = (current - 1) * this.pageSize;
+        var end = current * this.pageSize ;
+        this.queryData = this.paperData.slice(start, end);
+    },
+    getPaperList() {
       this.loading = true;
-      listPaper(this.queryParams).then((res) => {
-        this.paperData = res.data.result.records;
+      listPaper().then((res) => {
+        this.paperData = res.data.result;
         this.queryData = this.paperData;
-        this.total = res.data.result.total;
+        this.total = this.paperData.length;
+        this.queryData = this.paperData.slice(0, 5);
         this.loading = false;
       });
     },
@@ -458,10 +465,10 @@ h1 {
 
 .block {
   margin-top: 10vh;
-  margin-left: 45%;
+  margin-left: 42%;
 }
 
-.detailpane{
+.detailpane {
   font-size: 20px;
 }
 </style>

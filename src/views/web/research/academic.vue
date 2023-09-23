@@ -146,7 +146,7 @@ export default {
       listPaper(this.queryParams).then((res) => {
         this.paperData = res.data.result.records;
         this.queryData = this.paperData;
-        this.total = res.data.total;
+        this.total = res.data.result.total;
         this.loading = false;
       });
     },

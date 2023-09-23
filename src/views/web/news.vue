@@ -120,7 +120,7 @@ export default {
         // 当前页码
         pagenum: 1,
         // 当前每页显示多少条数据
-        pagesize: 10,
+        pagesize: 5,
         selectDate: ''
       },
       // 单页隐藏

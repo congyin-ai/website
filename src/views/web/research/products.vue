@@ -50,7 +50,41 @@ export default {
   },
   data() {
     return {
-      products: [],
+      products: [
+        {
+          cover_img:require('../../../assets/img/banner5.jpg'),
+          id: 3,
+          product_desc: "congin",
+          product_link: "http://localhost:8080",
+          product_logo:require('../../../assets/img/focus/bilibili.png'),
+          product_name: "tell",
+          product_sub_desc:
+            "We develop large-scale AI systems so that we can study their safety properties at the technological frontier, where new problems are most likely to arise. We use these insights to create safer, steerable, and more reliable models, and to generate systems that we deploy externally, like Claude.",
+          product_title: "鱼后大模型",
+        },
+        {
+          cover_img:require('../../../assets/img/banner5.jpg'),
+          id: 4,
+          product_desc: "congin",
+          product_link: "http://localhost:8080",
+          product_logo:require('../../../assets/img/focus/bilibili.png'),
+          product_name: "tell",
+          product_sub_desc:
+            "We develop large-scale AI systems so that we can study their safety properties at the technological frontier, where new problems are most likely to arise. We use these insights to create safer, steerable, and more reliable models, and to generate systems that we deploy externally, like Claude.",
+          product_title: "大模型赋能",
+        },
+        {
+          cover_img:require('../../../assets/img/banner5.jpg'),
+          id: 5,
+          product_desc: "congin",
+          product_link: "http://localhost:8080",
+          product_logo:require('../../../assets/img/focus/bilibili.png'),
+          product_name: "tell",
+          product_sub_desc:
+            "We develop large-scale AI systems so that we can study their safety properties at the technological frontier, where new problems are most likely to arise. We use these insights to create safer, steerable, and more reliable models, and to generate systems that we deploy externally, like Claude.",
+          product_title: "葱因算力",
+        }
+      ],
       activeIndex: 0,
       transitionName: "",
       scrolling: false,
@@ -83,21 +117,22 @@ export default {
     this.$store.commit("setHeaderShow", {
       headerShow: false,
     });
-    this.loading = true;
-    const { data: res } = await this.$http.get(
-      "https://xanadu.aerowang.cn/api/web/products"
-    );
-    if (res.status === 200) {
-      this.products = res.data.list;
-      this.loading = false;
-      // loading.close()
-      // if (this.$route.params.id) {
-      //   console.log(true)
-      //   this.activeIndex = this.products.findIndex(
-      //     item => item.id === this.$route.params.id
-      //   )
-      // }
-    }
+    // this.loading = true;
+    this.loading = false;
+    // const { data: res } = await this.$http.get(
+    //   "https://xanadu.aerowang.cn/api/web/products"
+    // );
+    // if (res.status === 200) {
+    //   this.products = res.data.list;
+    //   this.loading = false;
+    //   // loading.close()
+    //   // if (this.$route.params.id) {
+    //   //   console.log(true)
+    //   //   this.activeIndex = this.products.findIndex(
+    //   //     item => item.id === this.$route.params.id
+    //   //   )
+    //   // }
+    // }
   },
   mounted() {
     window.addEventListener("mousewheel", this.mousewheelHandler);

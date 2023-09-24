@@ -51,7 +51,7 @@
         v-loading="loading"
         class="paper"
       >
-        <el-table-column prop="author" label="作者"> </el-table-column>
+        <el-table-column prop="authors" label="研究员"> </el-table-column>
         <el-table-column prop="title" label="研究"> </el-table-column>
         <el-table-column prop="postedTime" label="发布时间"> </el-table-column>
         <el-table-column label="详情">

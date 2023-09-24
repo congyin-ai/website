@@ -190,13 +190,33 @@ h2 {
   margin: 0;
 }
 .el-menu-item {
-  
   border-radius: 8px 8px 8px 8px;
   font-size: 18px;
   font-weight: 400;
   font-family: "Microsoft YaHei";
-  min-width: 100px !important
+  min-width: 100px !important;
 }
+
+/*调submenu样式 */
+/* .item {
+  width: 30px;
+  background-color: #1eaafc;
+  background-image: linear-gradient(
+    130deg,
+    #6c52d9 0%,
+    #1eaafc 85%,
+    #3edfd7 100%
+  );
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  color: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+} */
 
 .el-menu--horizontal > .el-menu-item.is-active {
   border-bottom: 2px solid #40fff600;
@@ -206,19 +226,16 @@ h2 {
   font-size: 18px;
   border-radius: 8px 8px 8px 8px;
 }
-/* 菜單被選中的背景色 */
-.item {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-
 
 .el-menu {
+  background-color: rgba(0, 0, 0, 0);
   border: 0 !important;
   width: 100%;
 }
-
+.el-menu-item {
+  border-radius: 10px;
+  /* background-color: rgba(0, 0, 0, 0); */
+}
 .menu-item {
   background-color: rgba(0, 0, 0, 0);
 }

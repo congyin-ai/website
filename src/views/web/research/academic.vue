@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="search">
-      <div style="width: 100%"><h1>Search Paper</h1></div>
+      <div style="width: 100%"><h1>搜索</h1></div>
       <form class="search-form">
         <input class="search-submit" />
         <input
@@ -51,9 +51,10 @@
         v-loading="loading"
         class="paper"
       >
-        <el-table-column prop="title" label="Title"> </el-table-column>
-        <el-table-column prop="postedTime" label="PostTime"> </el-table-column>
-        <el-table-column label="Details">
+        <el-table-column prop="author" label="作者"> </el-table-column>
+        <el-table-column prop="title" label="研究"> </el-table-column>
+        <el-table-column prop="postedTime" label="发布时间"> </el-table-column>
+        <el-table-column label="详情">
           <template slot-scope="scope">
             <el-popover
               placement="top"

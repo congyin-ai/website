@@ -31,8 +31,7 @@
               <p>
                 {{ item.product_sub_desc }}
               </p>
-              <p>更多信息，请访问：</p>
-              <a :href="item.link" target="_blank">{{ item.product_link }}</a>
+              <router-link :to="{ path: '/research/productsDetail' ,query: { id: 456 } }"><el-button>查看详情</el-button></router-link>
             </div>
           </div>
         </div>
@@ -50,6 +49,7 @@ export default {
   },
   data() {
     return {
+      id:3,
       products: [
         {
           cover_img:require('../../../assets/img/banner5.jpg'),

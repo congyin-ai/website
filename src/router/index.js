@@ -20,13 +20,19 @@ const routes = [
     children: [
       { name:"academic",path: 'academic', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/academic.vue') },
       { name:'products',path: 'products', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/products.vue')},
-      { name:"experience",path:'experience',component: () => import(/* webpackChunkName: "news" */ '../views/web/research/experience.vue')}
+      { name: "experience", path: 'experience', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/experience.vue') },
+      { name: 'productsDetail', path: 'productsDetail', component: () => import(/* webpackChunkName: "news" */ '../views/web/research/productsDetail.vue')},
     ]
   },
   {
     path: '/news',
     name: 'news',
     component: () => import(/* webpackChunkName: "news" */ '../views/web/news.vue')
+  },
+  {
+    path: '/news/:id',
+    name: 'newsDetail',
+    component: () => import(/* webpackChunkName: "newsDetail" */ '../views/web/newsDetail.vue')
   },
   {
     path: '/us',

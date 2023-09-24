@@ -171,17 +171,86 @@ export default {
       this.getNewsItems()
     },
     // 根据新闻 类型、日期 查询新闻，并按日期排序
+
+
+    //!!!
     async getNewsItems () {
-      const { data: res } = await this.$http.get('/web/newslist', { params: this.pageInfo })
-      if (res.status !== 200) {
-        this.newsItems = {}
-      } else {
-        // this.$message.success('获取成功')
-        this.newsItems = res.data
-        if (this.newsItems.total <= this.newsItems.limit) {
-          this.singlePage = true
-        }
-      }
+      this.newsItems={
+        "list": [
+            {
+                "news_id": 91,
+                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230915/16947633375675267.jpg",
+                "news_title": "test",
+                "news_desc": "放热峰",
+                "is_hot": false,
+                "news_path": "16947633384109205",
+                "state": true,
+                "publish_time": "2023-09-15",
+                "update_time": "2023-09-15 15:35:38",
+                "type": 1
+            },
+            {
+                "news_id": 90,
+                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230816/16921644292373933.jpg",
+                "news_title": "测试标题",
+                "news_desc": "123",
+                "is_hot": false,
+                "news_path": "16921644303476804",
+                "state": true,
+                "publish_time": "2023-08-16",
+                "update_time": "2023-08-16 13:40:30",
+                "type": 1
+            },
+            {
+                "news_id": 89,
+                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230811/1691722047126691.jpg",
+                "news_title": "wqe",
+                "news_desc": "qwe",
+                "is_hot": false,
+                "news_path": "16917220480514738",
+                "state": true,
+                "publish_time": "2023-08-11",
+                "update_time": "2023-08-11 10:47:28",
+                "type": 1
+            },
+            {
+                "news_id": 85,
+                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230731/16908136412046564.png",
+                "news_title": "11",
+                "news_desc": "22",
+                "is_hot": false,
+                "news_path": "16908136515924928",
+                "state": true,
+                "publish_time": "2023-07-31",
+                "update_time": "2023-09-15 15:57:51",
+                "type": 1
+            },
+            {
+                "news_id": 84,
+                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230917/16949647206899969.jpg",
+                "news_title": "成为云计算领域最火概念之后 国内“云原生”走到了哪一步？",
+                "news_desc": "去年9月，一家名为Snowflake的云原生数据仓库厂商上市，当天市值即涨破700亿美元，一举成为软件史上最大IPO。",
+                "is_hot": false,
+                "news_path": "16905258273738547",
+                "state": true,
+                "publish_time": "2023-07-28",
+                "update_time": "2023-09-18 15:56:11",
+                "type": 1
+            }
+        ],
+        "total": 5,
+        "limit": 10
+    }
+      // const { data: res } = await this.$http.get('/web/newslist', { params: this.pageInfo })
+      // if (res.status !== 200) {
+      //   this.newsItems = {}
+      // } else {
+      //   // this.$message.success('获取成功')
+      //   this.newsItems = res.data
+      //   if (this.newsItems.total <= this.newsItems.limit) {
+      //     this.singlePage = true
+      //   }
+      // }
     },
     searchByDate (data) {
       // console.log(data)

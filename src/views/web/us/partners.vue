@@ -18,6 +18,11 @@
         </div>
       </div>
     </div>
+    <div class="table">
+      <el-form size="bold">
+        <el-form-item v-for="(item,index) in form" :key="index"><h2>{{item}}</h2></el-form-item>
+      </el-form>
+    </div>
     </div>
     <AwFooter style="margin-top: 80vh; height: 30vh"></AwFooter>
   </div>
@@ -32,6 +37,16 @@ export default {
     AwFooter,
     AwHeader,
     // CheckboxTransfer
+  },
+  data() {
+    return {
+      form:[
+        'Micro SaaS开发者公会',
+        '东莞理工学院量子力学算力组',
+        '西南财经大学大数据研究院',
+        '阳明心（深圳）文化产业有限公司'
+      ]
+    }
   },
 };
 </script>
@@ -145,4 +160,9 @@ export default {
   color:rgb(184, 176, 19)
   // margin-top: 10vh;
 }
+
+.table{
+  margin-top: 80vh;
+}
+
 </style>

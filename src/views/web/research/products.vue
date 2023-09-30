@@ -31,7 +31,7 @@
               <p>
                 {{ item.product_sub_desc }}
               </p>
-              <router-link :to="{ path: '/research/productsDetail' ,query: { id: 456 } }"><el-button>查看详情</el-button></router-link>
+              <router-link :to="{ path: '/research/productsDetail' ,query: { id: item.id } }"><el-button>查看详情</el-button></router-link>
             </div>
           </div>
         </div>
@@ -49,11 +49,11 @@ export default {
   },
   data() {
     return {
-      id:3,
+      // id:3,
       products: [
         {
           cover_img:require('../../../assets/img/banner5.jpg'),
-          id: 3,
+          id: 1,
           product_desc: "congin",
           product_link: "http://localhost:8080",
           product_logo:require('../../../assets/img/focus/bilibili.png'),
@@ -64,7 +64,7 @@ export default {
         },
         {
           cover_img:require('../../../assets/img/banner5.jpg'),
-          id: 4,
+          id: 2,
           product_desc: "congin",
           product_link: "http://localhost:8080",
           product_logo:require('../../../assets/img/focus/bilibili.png'),
@@ -75,7 +75,7 @@ export default {
         },
         {
           cover_img:require('../../../assets/img/banner5.jpg'),
-          id: 5,
+          id: 3,
           product_desc: "congin",
           product_link: "http://localhost:8080",
           product_logo:require('../../../assets/img/focus/bilibili.png'),

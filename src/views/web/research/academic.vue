@@ -283,7 +283,7 @@ export default {
   transition: top 1s;
 }
 .note_container {
-  margin-top: 10vh;
+  margin-top: 20vh;
   height: 60vh;
   display: flex;
   justify-content: center;

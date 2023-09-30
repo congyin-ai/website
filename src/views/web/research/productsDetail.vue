@@ -3,9 +3,9 @@
     <AwHeader class="productDetail_header"></AwHeader>
     <div class="box">
       <div class="container">
-        <div class="item content-1">pic</div>
-        <div class="item content-2">header</div>
-        <div class="item sidebar">LLM简介</div>
+        <div class="item content-1">{{products[this.$route.query.id-1].pic}}</div>
+        <div class="item content-2">{{products[this.$route.query.id-1].header}}</div>
+        <div class="item sidebar">{{products[this.$route.query.id-1].info}}</div>
       </div>
     </div>
     <AwFooter></AwFooter>
@@ -18,8 +18,18 @@ import AwFooter from "@/components/web/public/Footer.vue";
 export default {
   name: "productsDetail",
   components: { AwHeader, AwFooter },
+  data() {
+    return {
+      products: [
+        { pic: "鱼后大模型pic", header: "鱼后大模型", info: "鱼后大模型info", id: 1 },
+        { pic: "大模型赋能pic", header: "大模型赋能", info: "大模型赋能info", id: 2 },
+        { pic: "葱因算力pic", header: "葱因算力", info: "葱因算力info", id: 3 },
+      ],
+    };
+  },
   mounted() {
-    console.log(`output->`, this.$route);
+    // console.log(`output->`, this.$route);
+    // console.log(`output->`,this.products[this.$route.query.id].pic)
   },
 };
 </script>

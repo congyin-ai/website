@@ -7,7 +7,6 @@
           <div class="logo-text">
             <p class="text1">{{$t("footer.title")}}</p>
             <p class="text2">{{$t("footer.subtitle")}}</p>
-            <p @click="print()">{{a}}</p>
           </div>
         </div>
         <h2>{{$t("footer.copyright")}}</h2>
@@ -63,7 +62,6 @@ export default {
   name: 'Footer',
   data () {
     return {
-      a:this.$t('footer.title'),
       footerHeight: '',
       curWidth: '',
       logo_url: require('../../../assets/img/index/logoColor.png'),
@@ -106,12 +104,6 @@ export default {
         }
       ]
     }
-  },
-  computed: {
-    vueInstance() {
-      return this.$t('footer.title'); // 返回根Vue实例
-    },
-    // 或者返回其他需要的Vue实例属性或方法
   },
   methods: {
 

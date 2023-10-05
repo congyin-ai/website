@@ -1,18 +1,18 @@
 const en = {
     header: {
-        home: 'home',
+        home: 'Home',
         research: {
-            title: 'research',
-            sub1: 'academic',
-            sub2: 'products',
-            sub3:'experiment'
+            title: 'Research',
+            sub1: 'Academic',
+            sub2: 'Products',
+            sub3:'Experiment'
         },
-        news: 'news',
+        news: 'News',
         us:{
-            title: 'us',
-            sub1: 'introduction',
-            sub2: 'partners',
-            sub3:'join us'
+            title: 'Us',
+            sub1: 'Introduction',
+            sub2: 'Partners',
+            sub3:'Join us'
         },
     },
     footer: {

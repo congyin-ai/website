@@ -25,6 +25,7 @@ module.exports = {
   publicPath: '/',
   lintOnSave: false,
   devServer: {
+    disableHostCheck: true,
     proxy: {
       '/api': {
         // target:'http://127.0.0.1:4523/m2/3254709-0-default',

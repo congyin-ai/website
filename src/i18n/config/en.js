@@ -65,6 +65,10 @@ const en = {
             busmail: 'Business cooperation email',
             devmail:'Developer application email'
         }
+    },
+    langs: {
+        zh: 'zh',
+        en:'en'
     }
     
 }

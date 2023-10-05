@@ -66,6 +66,10 @@ const zh = {
             devmail:'开发者申请邮箱'
         }
 
+    },
+    langs: {
+        zh: '中文',
+        en:'英文'
     }
 }
 export default zh;

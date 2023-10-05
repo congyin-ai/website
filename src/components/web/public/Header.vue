@@ -24,30 +24,30 @@
             text-color="#000"
             :router="true"
           >
-            <el-menu-item index="/">首页</el-menu-item>
+            <el-menu-item index="/">{{$t("header.home")}}</el-menu-item>
             <el-submenu index="/research/products">
-              <template slot="title">研究</template>
+              <template slot="title">{{$t("header.research.title")}}</template>
               <el-menu-item index="/research/academic" class="item"
-                >科研</el-menu-item
+                >{{$t("header.research.sub1")}}</el-menu-item
               >
               <el-menu-item index="/research/products" class="item"
-                >产品介绍</el-menu-item
+                >{{$t("header.research.sub2")}}</el-menu-item
               >
               <el-menu-item index="/research/experience" class="item"
-                >体验</el-menu-item
+                >{{$t("header.research.sub3")}}</el-menu-item
               >
             </el-submenu>
-            <el-menu-item index="/news">新闻</el-menu-item>
+            <el-menu-item index="/news">{{$t("header.news")}}</el-menu-item>
             <el-submenu index="/us/cominfo">
-              <template slot="title">我们</template>
+              <template slot="title">{{$t("header.us.title")}}</template>
               <el-menu-item index="/us/cominfo" class="item"
-                >公司简介</el-menu-item
+                >{{$t("header.us.sub1")}}</el-menu-item
               >
               <el-menu-item index="/us/partners" class="item"
-                >合作伙伴</el-menu-item
+                >{{$t("header.us.sub2")}}</el-menu-item
               >
               <el-menu-item index="/us/joinus" class="item"
-                >加入我们</el-menu-item
+                >{{$t("header.us.sub3")}}</el-menu-item
               >
             </el-submenu>
             <el-menu-item index="/login" style="float: right"
@@ -67,7 +67,8 @@
                   p-id="5605"
                 ></path></svg
             ></el-menu-item>
-            <el-menu-item index="/lang" style="float: right"
+            <!-- <div>index="/lang"</div> -->
+            <el-menu-item @click.native="changeType" style="float: right"
               ><svg
                 t="1695479735009"
                 class="icon"
@@ -98,6 +99,7 @@ export default {
   name: "Header",
   data() {
     return {
+      lan: "",
       activeIndex: "1",
       activeIndex2: "1",
       navList: [
@@ -178,9 +180,32 @@ export default {
       "navDarkActive",
     ]),
   },
+  // beforeCreate() {
+  //   console.log(this.$i18n.locale); //zh
+  //   console.log(localStorage.getItem("locale")); //zh
+  // },
+  created() {
+    this.lan = this.$i18n.locale; //$i18n在实例刚创建完成就有了，这不是$el要在mounted时才能取到
+    // console.log(this.$i18n.locale); //zh
+    // console.log(localStorage.getItem("locale")); //zh
+  },
 
   mounted() {},
-  methods: {},
+  methods: {
+    changeType() {
+      // 此处做了语言选择记录，存在localStorage中，这里的作用只有一个当我重新请求页面
+      //的时候先取localStorage的记录值
+      var type='zh'
+      if(this.lan=='zh'){
+        type='en'
+      }else if(this.lan=='en'){
+        type='zh'
+      }
+      localStorage.setItem("locale", type);
+      this.$i18n.locale = type; // 修改页面需要显示的语言
+      this.lan = this.$i18n.locale;
+    },
+  },
 };
 </script>
 

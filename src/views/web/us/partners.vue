@@ -3,9 +3,9 @@
     <AwHeader class="joinus_header" ref="joinus_header"></AwHeader>
     <div class="box">
       <div>
-      <h1 style="font-size:38px;font-weight:400;font-family: 'PingFangSC-Regular,PingFang SC'">合作伙伴</h1>
-      <h2 style="font-size:16px;font-weight:300;">欢迎各位开发者、企业和机构与我们一起开创人工智能新时代</h2>
-      <h2 style="font-size:16px;font-weight:300;">商务合作邮箱 <span class="website">cooperate@aicongin.com </span>开发者申请邮箱 <span class="website">opensource@aicongin.com</span></h2>
+      <h1 style="font-size:38px;font-weight:400;font-family: 'PingFangSC-Regular,PingFang SC'">{{$t('us.partners.title')}}</h1>
+      <h2 style="font-size:16px;font-weight:300;">{{$t('us.partners.subtitle')}}</h2>
+      <h2 style="font-size:16px;font-weight:300;">{{$t('us.partners.busmail')}} <span class="website">cooperate@aicongin.com </span>{{$t('us.partners.devmail')}} <span class="website">opensource@aicongin.com</span></h2>
     </div>
     <div>
       <div class="a">

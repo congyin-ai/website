@@ -6,8 +6,8 @@
         <div id="app">
           <transition name="fade">
             <div v-if="showSlogan" class="slogan">
-              <p>Unleashing the Power of Knowledge:</p>
-              <p>Where Academia Meets Technology.</p>
+              <p>{{$t('research.academic.title1')}}</p>
+              <p>{{$t('research.academic.title2')}}</p>
             </div>
           </transition>
         </div>
@@ -16,22 +16,23 @@
     <div class="note_container">
       <transition name="slideUp">
         <p class="note" v-if="showSlogan">
-          We develop large-scale AI systems so that we can study their safety
+          <!-- We develop large-scale AI systems so that we can study their safety
           properties at the technological frontier, where new problems are most
           likely to arise. We use these insights to create safer, steerable, and
           more reliable models, and to generate systems that we deploy
-          externally, like Claude.
+          externally, like Claude. -->
+          {{$t('research.academic.subtitle')}}
         </p>
       </transition>
     </div>
     <div class="scroll-container">
       <div class="scrollHint">
         <div class="thumb"></div>
-        <div class="text">Scroll to continue...</div>
+        <div class="text">{{$t('research.academic.scroll')}}</div>
       </div>
     </div>
     <div class="search">
-      <div style="width: 100%"><h1>搜索</h1></div>
+      <div style="width: 100%"><h1>{{$t('research.academic.search')}}</h1></div>
       <form class="search-form">
         <input class="search-submit" />
         <input

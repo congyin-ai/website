@@ -6,10 +6,10 @@
         <el-card shadow = "hover">
           <router-link :to = "`/news/${item.news_path}`">
             <!--<div class = "item-mask"></div>-->
-            <img :src = "item.cover_img" alt = "">
+            <img :src = "item.pic" alt = "">
             <div class = "item-content">
-              <h2>{{ item.news_title }}</h2>
-              <p>{{ item.news_desc }}</p>
+              <h2>{{ item.title }}</h2>
+              <p>{{ item.intro }}</p>
               <span>{{ item.publish_time }}</span>
             </div>
           </router-link>

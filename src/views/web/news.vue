@@ -4,8 +4,8 @@
     <div class = "box">
       <div class = "news-banner">
         <div class = "banner-title">
-          <h2>新视野</h2>
-          <h3>了解更多新闻</h3>
+          <h2>{{$t("news.title")}}</h2>
+          <h3>{{$t("news.subtitle")}}</h3>
         </div>
         <el-autocomplete
           class = "search-news"
@@ -41,28 +41,7 @@
           </el-card>
         </div>
         <div class = "news-list">
-          <el-tabs class = "list-left" v-model = "pageInfo.activeName" @tab-click = "handleClick">
-            <el-tab-pane :label = "newsTabs[0].name" :name = "newsTabs[0].id">
-              <news-list :items = "newsItems.list" v-if = "pageInfo.activeName===newsTabs[0].id"></news-list>
-            </el-tab-pane>
-            <el-tab-pane :label = "newsTabs[1].name" :name = "newsTabs[1].id">
-              <news-list :items = "newsItems.list" v-if = "pageInfo.activeName===newsTabs[1].id"></news-list>
-            </el-tab-pane>
-            <el-tab-pane :label = "newsTabs[2].name" :name = "newsTabs[2].id">
-              <news-list :items = "newsItems.list" v-if = "pageInfo.activeName===newsTabs[2].id"></news-list>
-            </el-tab-pane>
-            <el-pagination
-              class = "pagination"
-              background
-              @current-change = "handleCurrentChange"
-              :current-page.sync = "pageInfo.pagenum"
-              :page-size = "pageInfo.pagesize"
-              layout = "prev, pager, next, jumper"
-              :total = "newsItems.total"
-              :hide-on-single-page = "singlePage"
-              v-scroll-to = "{ element: '.news-container',duration: 300, easing: 'ease',offset: -40  }">
-            </el-pagination>
-          </el-tabs>
+          <news-list :items = "newsItems.list" class="newslist" ></news-list>
           <div class = "list-right">
             <div class = "search-by-date">
               <p>按日期搜索：</p>
@@ -74,7 +53,6 @@
                 @change = "searchByDate(pageInfo.selectDate)">
               </el-date-picker>
             </div>
-            <hot-news></hot-news>
           </div>
         </div>
       </div>
@@ -100,20 +78,6 @@ export default {
   data () {
     return {
       searchNews: '',
-      newsTabs: [
-        {
-          id: '1',
-          name: '最新动态'
-        },
-        {
-          id: '2',
-          name: '典型案例'
-        },
-        {
-          id: '3',
-          name: '通知公告'
-        }
-      ],
       newsItems: {},
       pageInfo: {
         activeName: '1',
@@ -178,65 +142,29 @@ export default {
       this.newsItems={
         "list": [
             {
-                "news_id": 91,
-                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230915/16947633375675267.jpg",
-                "news_title": "test",
-                "news_desc": "放热峰",
-                "is_hot": false,
-                "news_path": "16947633384109205",
-                "state": true,
-                "publish_time": "2023-09-15",
-                "update_time": "2023-09-15 15:35:38",
-                "type": 1
-            },
-            {
-                "news_id": 90,
-                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230816/16921644292373933.jpg",
-                "news_title": "测试标题",
-                "news_desc": "123",
-                "is_hot": false,
-                "news_path": "16921644303476804",
-                "state": true,
-                "publish_time": "2023-08-16",
-                "update_time": "2023-08-16 13:40:30",
-                "type": 1
-            },
-            {
-                "news_id": 89,
-                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230811/1691722047126691.jpg",
-                "news_title": "wqe",
-                "news_desc": "qwe",
-                "is_hot": false,
-                "news_path": "16917220480514738",
-                "state": true,
-                "publish_time": "2023-08-11",
-                "update_time": "2023-08-11 10:47:28",
-                "type": 1
-            },
-            {
-                "news_id": 85,
-                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230731/16908136412046564.png",
-                "news_title": "11",
-                "news_desc": "22",
-                "is_hot": false,
-                "news_path": "16908136515924928",
-                "state": true,
-                "publish_time": "2023-07-31",
-                "update_time": "2023-09-15 15:57:51",
-                "type": 1
-            },
-            {
-                "news_id": 84,
-                "cover_img": "https://xanadu.aerowang.cn/server/static/upload/20230917/16949647206899969.jpg",
-                "news_title": "成为云计算领域最火概念之后 国内“云原生”走到了哪一步？",
-                "news_desc": "去年9月，一家名为Snowflake的云原生数据仓库厂商上市，当天市值即涨破700亿美元，一举成为软件史上最大IPO。",
-                "is_hot": false,
-                "news_path": "16905258273738547",
-                "state": true,
-                "publish_time": "2023-07-28",
-                "update_time": "2023-09-18 15:56:11",
-                "type": 1
-            }
+            "id": "1705164616732737537",
+            "title": "论强会思六全现",
+            "pic": "http://dummyimage.com/180x150",
+            "intro": "农天也立方这前至着消方流本。机地员了我细计线交战属我权四面。点组联般适义节选何色被结明红。按回天系想低议把通往已最京林带科。求白米第装共分海及热或转转务。"
+        },
+        {
+            "id": "1705164566786965505",
+            "title": "品习现被六",
+            "pic": "http://dummyimage.com/88x31",
+            "intro": "员处构连专联列精调调权算权明。样还众调我确九使清变料应但。性来至中新十养手增时及连口往由连确。拉达交将领行按目便文部片式实斗。有已活圆已包张算再了五素立标。定称技算将从阶上地同然何门支她。"
+        },
+        {
+            "id": "1705164490312220674",
+            "title": "委后受",
+            "pic": "http://dummyimage.com/468x60",
+            "intro": "山维六正何本点土生三太果思战织后片。装位收究养须认者什受务且图合务太。表我它高通象带叫相整质照消话。信和如采已知交参以最根只社。"
+        },
+        {
+            "id": "1705158267261149186",
+            "title": "据十般观相",
+            "pic": "http://dummyimage.com/120x240",
+            "intro": "市件决研反统属王统心公斯商有。全中联同件边最确斗件理组她把质安提。习里流圆确品声气第圆保把或战少周带。写按四情明切西资什资声术问合。些效社保叫须究科那者热角所习果率。"
+        }
         ],
         "total": 5,
         "limit": 10
@@ -257,19 +185,19 @@ export default {
       this.getNewsItems()
     },
 
-    async getRecomNews () {
-      const { data: res } = await this.$http.get('/web/recomNews')
-      if (res.status !== 200) {
-        this.hotNews = []
-      } else {
-        // this.$message.success('获取成功')
-        this.recomNews = res.data.list
-      }
-    }
+    // async getRecomNews () {
+    //   const { data: res } = await this.$http.get('/web/recomNews')
+    //   if (res.status !== 200) {
+    //     this.hotNews = []
+    //   } else {
+    //     // this.$message.success('获取成功')
+    //     this.recomNews = res.data.list
+    //   }
+    // }
   },
   created () {
     this.getNewsItems()
-    this.getRecomNews()
+    // this.getRecomNews()
   },
   mounted () {
     this.$store.commit('setHeaderLogo', {
@@ -320,6 +248,9 @@ export default {
   //background-size: cover;
 }
 
+.newslist{
+  margin-top: 5vh;
+}
 .news-banner {
   width: 100%;
   height: 280px;

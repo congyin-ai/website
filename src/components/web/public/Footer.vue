@@ -5,31 +5,41 @@
         <div class = "logo-container">
           <img :src = "logo_url" alt = "">
           <div class="logo-text">
-            <p class="text1">Congin</p>
-            <p class="text2">INTERNET COMPANY</p>
+            <p class="text1">{{$t("footer.title")}}</p>
+            <p class="text2">{{$t("footer.subtitle")}}</p>
+            <p @click="print()">{{a}}</p>
           </div>
         </div>
-        <h2>© 2022-2023 Congin&nbsp;科技有限公司</h2>
-        <h2>X公网安备 xxxxxxxxxxxxxx号 I ICP备xxxxxxxx号-1</h2>
+        <h2>{{$t("footer.copyright")}}</h2>
+        <h2>{{$t("footer.securityrecord")}}</h2>
       </div>
       <div class = "about_us footer-content-column">
-        <h2>关于我们</h2>
+        <h2>{{$t("footer.aboutus")}}</h2>
         <ul class = "about_list">
           <li>
-            <router-link to = "/job" target = "_blank">企业文化</router-link>
+            <router-link to = "/job" target = "_blank">{{$t("footer.culture")}}</router-link>
           </li>
         </ul>
       </div>
       <div class = "contact_us footer-content-column">
-        <h2>联系我们</h2>
+        <h2>{{$t("footer.contactus")}}</h2>
         <ul class = "contact_list">
-          <li v-for = "(item,index) in contact_way" :key = "index">
-            <a :href = "'mailto:'+item.email">{{ item.name }}</a>
+          <li>
+            <a href = "'mailto:'+item.email">{{ $t("footer.medium") }}</a>
+          </li>
+          <li>
+            <a href = "'mailto:'+item.email">{{ $t("footer.recruit") }}</a>
+          </li>
+          <li>
+            <a href = "'mailto:'+item.email">{{ $t("footer.cooperate") }}</a>
+          </li>
+          <li>
+            <a href = "'mailto:'+item.email">{{ $t("footer.ads") }}</a>
           </li>
         </ul>
       </div>
       <div class = "focus_us footer-content-column">
-        <h2>实时动态与招聘信息，扫码关注我们</h2>
+        <h2>{{$t("footer.QR.title")}}</h2>
         <div class = "media">
           <div :class = "item.name" v-for = "(item,index) in focus_icon" :key = "index">
             <el-popover
@@ -53,50 +63,58 @@ export default {
   name: 'Footer',
   data () {
     return {
+      a:this.$t('footer.title'),
       footerHeight: '',
       curWidth: '',
       logo_url: require('../../../assets/img/index/logoColor.png'),
-      contact_way: [
-        {
-          name: '媒体问询',
-          email: 'aerowangue@126.com'
-        },
-        {
-          name: '招聘相关',
-          email: 'aerowangue@126.com'
-        },
-        {
-          name: '商务合作',
-          email: 'aerowangue@126.com'
-        },
-        {
-          name: '广告相关',
-          email: 'aerowangue@126.com'
-        }
-      ],
+      // contact_way: [
+      //   {
+      //     name: this.$t("footer.medium"),
+      //     email: 'aerowangue@126.com'
+      //   },
+      //   {
+      //     name: this.$t("footer.recruit"),
+      //     email: 'aerowangue@126.com'
+      //   },
+      //   {
+      //     name: this.$t("footer.cooperate"),
+      //     email: 'aerowangue@126.com'
+      //   },
+      //   {
+      //     name: this.$t("footer.ads"),
+      //     email: 'aerowangue@126.com'
+      //   }
+      // ],
       focus_icon: [
         {
           name: 'weibo',
           path: require('../../../assets/img/focus/weibo.png'),
           qr: require('../../../assets/img/focus/qr_weixin.png'),
-          info: '关注官方微博'
+          info: this.$t("footer.QR.weibo")
         },
         {
           name: 'weixin',
           path: require('../../../assets/img/focus/weixin.svg'),
           qr: require('../../../assets/img/focus/qr_weixin.png'),
-          info: '关注官方微信公众号'
+          info: this.$t("footer.QR.wechat")
         },
         {
           name: 'bilibili',
           path: require('../../../assets/img/focus/bilibili.png'),
           qr: require('../../../assets/img/focus/qr_weixin.png'),
-          info: '关注官方 bilibili 号'
+          info: this.$t("footer.QR.bilibili")
         }
       ]
     }
   },
+  computed: {
+    vueInstance() {
+      return this.$t('footer.title'); // 返回根Vue实例
+    },
+    // 或者返回其他需要的Vue实例属性或方法
+  },
   methods: {
+
     // setFooterHeight () {
     //   this.curWidth = window.innerWidth
     //   if (this.curWidth <= 991) {

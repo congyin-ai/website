@@ -9,18 +9,16 @@
               <img src="@/assets/img/index/logo.png" style="width: 100%" />
             </div>
             <div class="info">
-              <h1>ABOUT US</h1>
+              <h1>{{$t('us.cominfo.title')}}</h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellendus odit nihil ullam nesciunt quidem iste, Repellendus
-                odit nihil
+                {{$t('us.cominfo.subtitle')}}
               </p>
-              <button>Learn More</button>
+              <button>{{$t('us.cominfo.button')}}</button>
             </div>
           </div>
         </div>
         <div class="gtco-testimonials">
-          <h2>Members</h2>
+          <h2>{{$t('us.cominfo.members')}}</h2>
           <div class="owl-carousel owl-carousel1 owl-theme">
             <div class="members">
               <div class="member">
@@ -32,12 +30,11 @@
                 />
                 <div class="card-body">
                   <h5>
-                    Ronne Galle <br />
-                    <span> Project Manager </span>
+                    {{$t('us.cominfo.member1.name')}}<br />
+                    <span> {{$t('us.cominfo.member1.position')}} </span>
                   </h5>
                   <p class="card-text">
-                    “ Nam libero tempore, cum soluta nobis est eligendi optio
-                    cumque nihil impedit quo minus id quod maxime placeat ”
+                    {{$t('us.cominfo.member1.motto')}}
                   </p>
                 </div>
               </div>
@@ -49,12 +46,11 @@
                 />
                 <div class="card-body">
                   <h5>
-                    Ronne Galle <br />
-                    <span> Project Manager </span>
+                    {{$t('us.cominfo.member1.name')}}<br />
+                    <span> {{$t('us.cominfo.member1.position')}} </span>
                   </h5>
                   <p class="card-text">
-                    “ Nam libero tempore, cum soluta nobis est eligendi optio
-                    cumque nihil impedit quo minus id quod maxime placeat ”
+                    {{$t('us.cominfo.member1.motto')}}
                   </p>
                 </div>
               </div>
@@ -66,12 +62,11 @@
                 />
                 <div class="card-body">
                   <h5>
-                    Ronne Galle <br />
-                    <span> Project Manager </span>
+                    {{$t('us.cominfo.member1.name')}}<br />
+                    <span> {{$t('us.cominfo.member1.position')}} </span>
                   </h5>
                   <p class="card-text">
-                    “ Nam libero tempore, cum soluta nobis est eligendi optio
-                    cumque nihil impedit quo minus id quod maxime placeat ”
+                    {{$t('us.cominfo.member1.motto')}}
                   </p>
                 </div>
               </div>
@@ -85,12 +80,11 @@
                 />
                 <div class="card-body">
                   <h5>
-                    Ronne Galle <br />
-                    <span> Project Manager </span>
+                    {{$t('us.cominfo.member1.name')}}<br />
+                    <span> {{$t('us.cominfo.member1.position')}} </span>
                   </h5>
                   <p class="card-text">
-                    “ Nam libero tempore, cum soluta nobis est eligendi optio
-                    cumque nihil impedit quo minus id quod maxime placeat ”
+                    {{$t('us.cominfo.member1.motto')}}
                   </p>
                 </div>
               </div>
@@ -102,12 +96,11 @@
                 />
                 <div class="card-body">
                   <h5>
-                    Ronne Galle <br />
-                    <span> Project Manager </span>
+                    {{$t('us.cominfo.member1.name')}}<br />
+                    <span> {{$t('us.cominfo.member1.position')}} </span>
                   </h5>
                   <p class="card-text">
-                    “ Nam libero tempore, cum soluta nobis est eligendi optio
-                    cumque nihil impedit quo minus id quod maxime placeat ”
+                    {{$t('us.cominfo.member1.motto')}}
                   </p>
                 </div>
               </div>
@@ -119,12 +112,11 @@
                 />
                 <div class="card-body">
                   <h5>
-                    Ronne Galle <br />
-                    <span> Project Manager </span>
+                    {{$t('us.cominfo.member1.name')}}<br />
+                    <span> {{$t('us.cominfo.member1.position')}} </span>
                   </h5>
                   <p class="card-text">
-                    “ Nam libero tempore, cum soluta nobis est eligendi optio
-                    cumque nihil impedit quo minus id quod maxime placeat ”
+                    {{$t('us.cominfo.member1.motto')}}
                   </p>
                 </div>
               </div>
@@ -229,6 +221,8 @@ export default {
 .landing-page .content .info h1 {
   color: #5d5d5d;
   font-size: 44px;
+  width: 200%;/*1005修改*/
+  
 }
 .landing-page .content .info p {
   margin: 0;

@@ -14,6 +14,7 @@ import './assets/style/common.css'
 import './assets/font/iconfont'
 // import animated from 'animate.css'
 import VueScrollTo from 'vue-scrollto'
+import i18n from './i18n/index'; 
 
 // 网站统计
 /* eslint-disable */
@@ -52,5 +53,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

@@ -1,9 +1,9 @@
 <template>
-  <div id = "app">
+  <div id="app">
     <router-view></router-view>
-    <el-backtop :bottom = "80" :right = "60" :visibility-height = "280">
-      <svg class = "icon" aria-hidden = "true">
-        <use xlink:href = "#icon-huojian"></use>
+    <el-backtop :bottom="80" :right="60" :visibility-height="280">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-huojian"></use>
       </svg>
     </el-backtop>
   </div>
@@ -11,19 +11,15 @@
 
 <script>
 export default {
-  name: 'index',
+  name: "index",
   components: {},
-  data () {
-    return {
-    }
+  data() {
+    return {};
   },
-  methods: {
-  },
+  methods: {},
 
-  created () {
-  }
-
-}
+  created() {},
+};
 </script>
 
 <style lang = "less" scoped>
@@ -38,6 +34,6 @@ export default {
 .el-backtop {
   width: 48px;
   height: 48px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, .2);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
 </style>

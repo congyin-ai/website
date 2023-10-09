@@ -1,236 +1,353 @@
-<!--<template>-->
-<!--  <div class = "login">-->
-<!--    <AwHeader class = "login_header" ref = "login_header"></AwHeader>-->
-<!--    &lt;!&ndash;<nav :class = "nav_show"></nav>&ndash;&gt;-->
-<!--    <div class = "box">-->
-<!--      <img :src = "backgroundImg" alt = "" class = "background-img">-->
-<!--      <el-card class = "container-login" ref = "loginCard">-->
-<!--        <div class = "headerToggle">-->
-<!--          <h2>登录</h2>-->
-<!--          <span class = "pull-right">没有账号？<router-link to = "/signup">点击注册</router-link></span>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;  登录表单区域&ndash;&gt;-->
-<!--        <el-form ref = "loginFormRef" :model = "loginForm" :rules = "loginFormRules"-->
-<!--                 label-width = "0" class = "login_form">-->
-<!--          &lt;!&ndash;用户名&ndash;&gt;-->
-<!--          <el-form-item prop = "username">-->
-<!--            <el-input placeholder = "用户名" v-model = "loginForm.username" prefix-icon = "el-icon-user-solid"></el-input>-->
-<!--          </el-form-item>-->
-<!--          &lt;!&ndash;密码&ndash;&gt;-->
-<!--          <el-form-item prop = "password">-->
-<!--            <el-input placeholder = "密码" type = "password" v-model = "loginForm.password"-->
-<!--                      prefix-icon = "el-icon-lock"></el-input>-->
-<!--          </el-form-item>-->
-<!--          &lt;!&ndash;  按钮区域&ndash;&gt;-->
-<!--          <el-form-item class = "btns">-->
-<!--            <el-button round type = "primary" @click = "login">登录</el-button>-->
-<!--            <el-button round type = "info" @click = "resetLoginForm">重置</el-button>-->
-<!--          </el-form-item>-->
-<!--        </el-form>-->
-<!--      </el-card>-->
-<!--      <router-view></router-view>-->
-<!--    </div>-->
-<!--    <AwFooter></AwFooter>-->
-<!--  </div>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--import AwHeader from '../../components/web/public/Header'-->
-<!--import AwFooter from '../../components/web/public/Footer'-->
-<!--import { mapState } from 'vuex'-->
-
-<!--export default {-->
-<!--  name: 'index',-->
-<!--  components: {-->
-<!--    AwFooter,-->
-<!--    AwHeader-->
-<!--  },-->
-<!--  data () {-->
-<!--    return {-->
-<!--      nav_show: '',-->
-<!--      backgroundImg: require('../../assets/img/banner1.jpg'),-->
-<!--      // 这是登录表单-->
-<!--      loginForm: {-->
-<!--        username: '',-->
-<!--        password: ''-->
-<!--      },-->
-<!--      // 这是表单的验证规则对象-->
-<!--      loginFormRules: {-->
-<!--        // 验证用户名名是否合法-->
-<!--        username: [-->
-<!--          {-->
-<!--            required: true,-->
-<!--            message: '请输入登录名称',-->
-<!--            trigger: 'blur'-->
-<!--          },-->
-<!--          {-->
-<!--            min: 3,-->
-<!--            max: 10,-->
-<!--            message: '长度在 3 到 10 个字符',-->
-<!--            trigger: 'blur'-->
-<!--          }-->
-<!--        ],-->
-<!--        // 验证密码是狗合法-->
-<!--        password: [-->
-<!--          {-->
-<!--            required: true,-->
-<!--            message: '请输入密码',-->
-<!--            trigger: 'blur'-->
-<!--          },-->
-<!--          {-->
-<!--            min: 6,-->
-<!--            max: 15,-->
-<!--            message: '长度在 6 到 15 个字符',-->
-<!--            trigger: 'blur'-->
-<!--          }-->
-<!--        ]-->
-<!--      }-->
-<!--    }-->
-<!--  },-->
-<!--  computed: mapState(['BannerHeight']),-->
-<!--  methods: {-->
-<!--    // 点击重置按钮，重置登录表单-->
-<!--    resetLoginForm () {-->
-<!--      // console.log(this)-->
-<!--      this.$refs.loginFormRef.resetFields()-->
-<!--    },-->
-<!--    login () {-->
-<!--      this.$refs.loginFormRef.validate(async (valid) => {-->
-<!--        // console.log(this.loginForm)-->
-<!--        if (!valid) return-->
-<!--        const { data: res } = await this.$http.post('/web/login', this.loginForm)-->
-<!--        console.log(res)-->
-<!--        if (res.status !== 200) {-->
-<!--          return this.$message.error('登录失败')-->
-<!--        } else {-->
-<!--          this.$message.success('登录成功')-->
-<!--          // console.log(res)-->
-<!--          // 1、保存 token 到 sessionStorage 中-->
-<!--          window.sessionStorage.setItem('token', res.data.token)-->
-
-<!--          // 2、编程式导航：页面跳转-->
-<!--          await this.$router.push('/admin')-->
-<!--          // this.$store.commit('setNavDarkActive', {-->
-<!--          //   navDarkActive: false-->
-<!--          // })-->
-<!--        }-->
-<!--      })-->
-<!--    }-->
-<!--  },-->
-<!--  mounted () {-->
-<!--    this.$store.commit('setHeaderLogo', {-->
-<!--      headerLogoShow: false-->
-<!--    })-->
-<!--    this.$store.commit('setShadowActive', {-->
-<!--      headerShadowActive: false-->
-<!--    })-->
-<!--    this.$store.commit('setNavDarkActive', {-->
-<!--      navDarkActive: true-->
-<!--    })-->
-<!--    this.$store.commit('setHeaderShow', {-->
-<!--      headerShow: false-->
-<!--    })-->
-<!--  },-->
-<!--  beforeRouteLeave (to, from, next) {-->
-<!--    // 导航离开该组件的对应路由时调用-->
-<!--    // 可以访问组件实例 `this`-->
-<!--    if (from.name === 'login') {-->
-<!--      this.$store.commit('setNavDarkActive', {-->
-<!--        navDarkActive: false-->
-<!--      })-->
-<!--      this.$store.commit('setHeaderLogo', {-->
-<!--        headerLogoShow: true-->
-<!--      })-->
-<!--      next()-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
-<!--<style lang = "less" scoped>-->
-<!--.login {-->
-<!--  //min-height: 800px;-->
-<!--  position: relative;-->
-<!--}-->
-
-<!--.login_header {-->
-<!--  background-color: rgba(255, 255, 255, .3);-->
-<!--  backdrop-filter: blur(10px);-->
-<!--  //border-bottom: 1px solid #f8f8f8;-->
-<!--}-->
-
-<!--.box {-->
-<!--  //padding-top: 60px;-->
-<!--  width: 100%;-->
-<!--  height: 763px;-->
-<!--  display: flex;-->
-<!--  justify-content: center;-->
-<!--  align-items: center;-->
-<!--  position: relative;-->
-<!--}-->
-
-<!--.background-img {-->
-<!--  height: 100%;-->
-<!--  width: 100%;-->
-<!--  object-fit: cover;-->
-<!--  position: absolute;-->
-<!--  z-index: -1;-->
-<!--}-->
-
-<!--.container-login {-->
-<!--  min-width: 480px;-->
-<!--  margin-bottom: 50px;-->
-<!--  padding: 35px;-->
-<!--  background-color: rgba(255, 255, 255, .1);-->
-<!--  backdrop-filter: blur(5px);-->
-<!--  border: none;-->
-
-<!--  .headerToggle {-->
-<!--    display: flex;-->
-<!--    justify-content: space-between;-->
-<!--    align-items: flex-end;-->
-<!--    margin-bottom: 24px;-->
-<!--  }-->
-
-<!--  h2 {-->
-<!--    font-size: 24px;-->
-<!--    font-weight: 600;-->
-<!--  }-->
-
-<!--  /deep/ .el-form-item__content {-->
-<!--    display: flex;-->
-<!--    justify-content: space-between;-->
-<!--    margin: 0 auto;-->
-
-<!--    .el-button {-->
-<!--      //margin-right: 80px;-->
-<!--    }-->
-
-<!--    .el-input__inner {-->
-<!--      background-color: rgba(255, 255, 255, .5);-->
-<!--      border: none;-->
-<!--    }-->
-
-<!--    input::placeholder {-->
-<!--      color: #818181;-->
-<!--    }-->
-<!--  }-->
-
-<!--  .pull-right {-->
-<!--  }-->
-<!--}-->
-<!--</style>-->
 <template>
-  <div></div>
+  <div class="login">
+    <AwHeader></AwHeader>
+    <div class="container" :class="{ 'log-in': isLogIn, 'active': isFormActive }">
+      <div class="box"></div>
+      <div class="container-forms">
+        <div class="container-info">
+          <div class="info-item">
+            <div class="table">
+              <div class="table-cell">
+                <p>{{$t('login.title2')}}</p>
+                <button class="btn" @click="toggleContainer">{{$t('login.login')}}</button>
+              </div>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="table">
+              <div class="table-cell">
+                <p>{{$t('login.title1')}}</p>
+                <button class="btn" @click="toggleContainer">{{$t('login.signup')}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container-form">
+          <div class="form-item log-in">
+            <div class="table">
+              <div class="table-cell">
+                <input
+                  name='username'
+                  :placeholder="$t('login.username')"
+                  type="text"
+                /><input
+                  name="Password"
+                  :placeholder="$t('login.password')"
+                  type="Password"
+                />
+                <div class="btn" @click="activateContainer">{{$t('login.login')}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-item sign-up">
+            <div class="table">
+              <div class="table-cell">
+                <input name="email" :placeholder="$t('login.email')" type="text" />
+                <input
+                  name="fullName"
+                  :placeholder="$t('login.fullname')"
+                  type="text"
+                /><input
+                  name="Username"
+                  :placeholder="$t('login.username')"
+                  type="text"
+                /><input
+                  name="Password"
+                  :placeholder="$t('login.password')"
+                  type="Password"
+                />
+                <div class="btn" @click="activateContainer">{{$t('login.signup')}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+
 <script>
+import AwHeader from '../../components/web/public/Header'
 export default {
-  name: 'login',
-  mounted () {
-    // const devUrl = 'http://localhost:9000/admin/#/login'
-    const prodUrl = 'https://xanadu.aerowang.cn/admin/#/login'
-    window.open(prodUrl, '_blank')
-    this.$router.push('/index')
+  data() {
+    return {
+      isLogIn: false,
+      isFormActive: false
+    }
+  },
+  components: {
+    AwHeader
+  },
+  methods:{
+    toggleContainer() {
+      this.isLogIn = !this.isLogIn;
+    },
+    activateContainer() {
+      this.isFormActive = true;
+    }
   }
 }
 </script>
+
+<style lang="less" scoped>
+@charset "UTF-8";
+// @import url(x.css);
+.login {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  background-color: #5356ad;
+  overflow: hidden;
+}
+
+
+.table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.table-cell {
+  display: table-cell;
+  vertical-align: middle;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.container {
+  position: relative;
+  width: 600px;
+  margin: 30px auto 0;
+  height: 320px;
+  background-color: #999ede;
+  top: 10%;
+  margin-top: 20vh;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.container .box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.container .box:before,
+.container .box:after {
+  content: " ";
+  position: absolute;
+  left: 152px;
+  top: 50px;
+  background-color: #9297e0;
+  transform: rotateX(52deg) rotateY(15deg) rotateZ(-38deg);
+  width: 300px;
+  height: 285px;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.container .box:after {
+  background-color: #a5aae4;
+  top: -10px;
+  left: 80px;
+  width: 320px;
+  height: 180px;
+}
+.container .container-forms {
+  position: relative;
+}
+.container .btn {
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+  width: 100px;
+  color: #fff;
+  background-color: #ff73b3;
+  opacity: 1;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.container .btn:hover {
+  opacity: 0.7;
+}
+.container .btn,
+.container input {
+  padding: 10px 15px;
+  // border: 10px;
+}
+.container input {
+  margin: 0 auto 15px;
+  display: block;
+  width: 220px;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.container .container-forms .container-info {
+  text-align: left;
+  font-size: 0;
+}
+.container .container-forms .container-info .info-item {
+  text-align: center;
+  font-size: 16px;
+  width: 300px;
+  height: 320px;
+  display: inline-block;
+  vertical-align: top;
+  color: #fff;
+  opacity: 1;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.container .container-forms .container-info .info-item p {
+  font-size: 20px;
+  margin: 20px;
+}
+.container .container-forms .container-info .info-item .btn {
+  background-color: transparent;
+  border: 1px solid #fff;
+}
+.container .container-forms .container-info .info-item .table-cell {
+  padding-right: 35px;
+}
+.container
+  .container-forms
+  .container-info
+  .info-item:nth-child(2)
+  .table-cell {
+  padding-left: 35px;
+  padding-right: 0;
+}
+.container .container-form {
+  overflow: hidden;
+  position: absolute;
+  left: 30px;
+  top: -30px;
+  width: 305px;
+  height: 380px;
+  background-color: #fff;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.container .container-form:before {
+  content: "✔";
+  position: absolute;
+  left: 160px;
+  top: -50px;
+  color: #5356ad;
+  font-size: 130px;
+  opacity: 0;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.container .container-form .btn {
+  position: relative;
+  box-shadow: 0 0 10px 1px #ff73b3;
+  margin-top: 30px;
+}
+.container .form-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.container .form-item.sign-up {
+  position: absolute;
+  left: -100%;
+  opacity: 0;
+}
+.container.log-in .box:before {
+  position: absolute;
+  left: 180px;
+  top: 62px;
+  height: 265px;
+}
+.container.log-in .box:after {
+  top: 22px;
+  left: 192px;
+  width: 324px;
+  height: 220px;
+}
+.container.log-in .container-form {
+  left: 265px;
+}
+.container.log-in .container-form .form-item.sign-up {
+  left: 0;
+  opacity: 1;
+}
+.container.log-in .container-form .form-item.log-in {
+  left: -100%;
+  opacity: 0;
+}
+.container.active {
+  width: 260px;
+  height: 140px;
+  margin-top: -70px;
+}
+.container.active .container-form {
+  left: 30px;
+  width: 200px;
+  height: 200px;
+}
+.container.active .container-form:before {
+  content: "✔";
+  position: absolute;
+  left: 51px;
+  top: 5px;
+  color: #5356ad;
+  font-size: 130px;
+  opacity: 1;
+}
+.container.active input,
+.container.active .btn,
+.container.active .info-item {
+  display: none;
+  opacity: 0;
+  padding: 0px;
+  margin: 0 auto;
+  height: 0;
+}
+.container.active .form-item {
+  height: 100%;
+}
+.container.active .container-forms .container-info .info-item {
+  height: 0%;
+  opacity: 0;
+}
+
+.rabbit {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 3;
+  fill: #fff;
+}
+
+</style>

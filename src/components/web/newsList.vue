@@ -4,13 +4,13 @@
       <li class = "news-list-item" v-for = "(item,index) in items"
           :key = "index">
         <el-card shadow = "hover">
-          <router-link :to = "`/news/${item.news_path}`">
+          <router-link :to = "`/news/${item.newsId}`">
             <!--<div class = "item-mask"></div>-->
-            <img :src = "item.pic" alt = "">
+            <img :src = "'http://zrbridge.top:12506/prod-api'+item.pic" alt = "">
             <div class = "item-content">
               <h2>{{ item.title }}</h2>
               <p>{{ item.intro }}</p>
-              <span>{{ item.publish_time }}</span>
+              <span>{{ item.postedTime }}</span>
             </div>
           </router-link>
         </el-card>

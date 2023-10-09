@@ -64,8 +64,8 @@
               transition="fade-in-linear"
             >
               <el-form class="detailpane">
-                <div>Introduce</div>
-                <el-form-item>{{ detail.intro }}</el-form-item>
+                <div>Content</div>
+                <el-form-item><div v-html="detail.content"></div></el-form-item>
                 <div>Address</div>
                 <el-form-item>{{ detail.address }}</el-form-item>
               </el-form>
@@ -98,7 +98,7 @@
 <script>
 import AwHeader from "@/components/web/public/Header";
 import AwFooter from "../../../components/web/public/Footer";
-import { getDetailedPaper, listPaper } from "@/api/research.js";
+import { getDetailedPaper, getPaper } from "@/api/research";
 export default {
   components: {
     AwHeader,
@@ -111,7 +111,7 @@ export default {
       pageSize:5,
       detail: {
         address: "http://iuiqqmr.ec/tlemlc",
-        intro:
+        content:
           "务山养第证分思果油社改山取也示事。称群表八广习时通清百志属打。而住阶全联严装干开包生周改立济。阶单品值军世方无因山市义反置重过光。再素质使强号阶们包取子半局门单。海起资照快这府作东合步料容度温但据。",
       },
       query: "",
@@ -135,10 +135,9 @@ export default {
       }
     },
     handleClick(row) {
-      getDetailedPaper(row.id).then((res) => {
-        console.log(`output->res`, res);
-        if (res.code == 200) {
-          this.detail = res.data.result;
+      getDetailedPaper(row.thesisId).then((res) => {
+        if (res.status == 200) {
+          this.detail = res.data.data;
         } else {
           console.log(`output->'error'`, "error");
         }
@@ -151,8 +150,9 @@ export default {
     },
     getPaperList() {
       this.loading = true;
-      listPaper().then((res) => {
-        this.paperData = res.data.result;
+      getPaper().then((res) => {
+        console.log(`output->res`,res)
+        this.paperData = res.data.rows;
         this.queryData = this.paperData;
         this.total = this.paperData.length;
         this.queryData = this.paperData.slice(0, 5);

@@ -5,21 +5,36 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 // 优化打包
 // externals
-const externals = {
-  vue: 'Vue',
-  'vue-router': 'VueRouter',
-  vuex: 'Vuex',
-  'element-ui': 'ElementUI',
-  // 'mavon-editor': 'mavonEditor',
-  axios: 'axios'
-}
-const cdn = {
-  // 开发环境
-  dev: {
-    css: [],
-    js: []
-  },
-}
+// const externals = {
+//   vue: 'Vue',
+//   'vue-router': 'VueRouter',
+//   vuex: 'Vuex',
+//   'element-ui': 'ElementUI',
+//   // 'mavon-editor': 'mavonEditor',
+//   axios: 'axios'
+// }
+// const cdn = {
+//   // 开发环境
+//   dev: {
+//     css: [],
+//     js: []
+//   },
+//   // 生产环境
+//   build: {
+//     css: [
+//       'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-5-y/element-ui/2.15.1/theme-chalk/index.min.css',
+//     ],
+//     js: [
+//       'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-5-y/vue/2.6.11/vue.min.js',
+//       'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-5-y/vue-router/3.2.0/vue-router.min.js',
+//       'https://lf6-cdn-tos.bytecdntp.com/cdn/expire-5-y/vuex/3.6.1/vuex.min.js',
+//       'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-5-y/element-ui/2.15.1/index.min.js',
+//       // 'https://cdn.jsdelivr.net/npm/mavon-editor@2.9.1/dist/mavon-editor.min.js',
+//       'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-5-y/axios/0.18.0/axios.min.js'
+//       // 'https://unpkg.com/element-ui/lib/index.js'
+//     ]
+//   }
+// }
 
 module.exports = {
   publicPath: '/',
@@ -27,18 +42,18 @@ module.exports = {
   devServer: {
     disableHostCheck: true,
     proxy: {
-      '/api': {
-        // target:'http://127.0.0.1:4523/m2/3254709-0-default',
-        target: 'http://aicongin.com:12505',
-        // ws: true,
+       '/api': {
+       target: 'http://zrbridge.top:12505/',
+       // ws: true,
         changeOrigin: true,
         pathRewrite: {
-          // '^/api': '/api/private/v1/'
+        // '^/api': '/api/private/v1/'
           ["^" + "/api"]: "",
         }
       }
     }
   },
+
   // 优化打包
   // 去除生产环境的productionSourceMap
   productionSourceMap: false,
@@ -72,7 +87,7 @@ module.exports = {
         })
       )
       // 打包时npm包转CDN
-      config.externals = externals
+      // config.externals = externals
     }
     return { plugins }
   },
@@ -83,8 +98,8 @@ module.exports = {
        * 添加CDN参数到htmlWebpackPlugin配置中
        */
       config.plugin('html').tap(args => {
-        args[0].cdn = cdn.build
-        args[0].title = 'Xanadu'
+        // args[0].cdn = cdn.build
+        args[0].title = 'Congin'
         return args
       })
     })
@@ -92,8 +107,8 @@ module.exports = {
     config.when(process.env.NODE_ENV === 'development', config => {
       config.entry('app').clear().add('./src/main-dev.js')
       config.plugin('html').tap(args => {
-        args[0].cdn = cdn.dev
-        args[0].title = 'Congin'
+        // args[0].cdn = cdn.dev
+        args[0].title = 'Dev-Congin'
         return args
       })
     })

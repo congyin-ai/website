@@ -1,56 +1,84 @@
 <template>
-  <div class = "news">
-    <AwHeader class = "news_header" ref = "news_header"></AwHeader>
-    <div class = "box">
-      <div class = "news-banner">
-        <div class = "banner-title">
-          <h2>{{$t("news.title")}}</h2>
-          <h3>{{$t("news.subtitle")}}</h3>
+  <div class="news">
+    <AwHeader class="news_header" ref="news_header"></AwHeader>
+    <div class="box">
+      <div class="news-banner">
+        <div class="banner-title">
+          <h2>{{ $t("news.title") }}</h2>
+          <h3>{{ $t("news.subtitle") }}</h3>
         </div>
         <el-autocomplete
-          class = "search-news"
-          popper-class = "my-autocomplete"
+          class="search-news"
+          popper-class="my-autocomplete"
           highlight-first-item
-          v-model = "searchNews"
+          v-model="searchNews"
           clearable
-          ref = "autocomplete"
-          @focus = "autocompleteFlag=true"
-          @blur = "autocompleteFlag=false"
-          @clear = "searchHandle"
-          :fetch-suggestions = "querySearchAsync"
-          placeholder = "请输入新闻关键词"
-          :trigger-on-focus = "false">
-          <i slot = "prefix" class = "el-input__icon el-icon-search"></i>
-          <template slot-scope = "{ item }">
-            <router-link :to = "item.news_path" target = "_blank">
-              <div class = "name" v-html = "item.news_title"></div>
-              <span class = "desc" v-html = "item.news_desc"></span>
+          ref="autocomplete"
+          @focus="autocompleteFlag = true"
+          @blur="autocompleteFlag = false"
+          @clear="searchHandle"
+          :fetch-suggestions="querySearchAsync"
+          :placeholder="$t('news.search')"
+          :trigger-on-focus="false"
+        >
+          <i slot="prefix" class="el-input__icon el-icon-search"></i>
+          <template slot-scope="{ item }">
+            <router-link :to="`/news/${item.newsId}`" target="_blank">
+              <div class="name" v-html="item.title"></div>
+              <span class="desc" v-html="item.intro"></span>
             </router-link>
           </template>
         </el-autocomplete>
       </div>
-      <div class = "news-container">
-        <div class = "news-card">
-          <el-card shadow = "never" v-for = "(item,index) in recomNews" :key = "index">
-            <router-link :to = "`/news/${item.news_path}`">
-              <div class = "news-card-item">
-                <img :src = "item.cover_img" alt = "">
-                <p class = "item-mask"><span>{{ item.news_title }}</span></p>
+      <div class="news-container">
+        <div class="news-card">
+          <el-card
+            shadow="never"
+            v-for="(item, index) in recomNews"
+            :key="index"
+          >
+            <router-link :to="`/news/${item.newsId}`">
+              <div class="news-card-item">
+                <img :src="item.cover_img" alt="" />
+                <p class="item-mask">
+                  <span>{{ item.title }}</span>
+                </p>
               </div>
             </router-link>
           </el-card>
         </div>
-        <div class = "news-list">
-          <news-list :items = "newsItems.list" class="newslist" ></news-list>
-          <div class = "list-right">
-            <div class = "search-by-date">
+        <div class="news-list">
+          <div class="list-left">
+            <news-list :items="newsItems" class="newslist"></news-list>
+            <el-pagination
+              class="pagination"
+              background
+              @current-change="handleCurrentChange"
+              :current-page.sync="pageInfo.pagenum"
+              :page-size="pageInfo.pagesize"
+              layout="prev, pager, next, jumper"
+              :total="total"
+              :hide-on-single-page="singlePage"
+              v-scroll-to="{
+                element: '.news-container',
+                duration: 300,
+                easing: 'ease',
+                offset: -40,
+              }"
+            >
+            </el-pagination>
+          </div>
+
+          <div class="list-right">
+            <div class="search-by-date">
               <p>按日期搜索：</p>
               <el-date-picker
-                v-model = "pageInfo.selectDate"
-                type = "month"
-                placeholder = "选择日期"
-                value-format = "yyyy-MM"
-                @change = "searchByDate(pageInfo.selectDate)">
+                v-model="pageInfo.selectDate"
+                type="month"
+                placeholder="选择日期"
+                value-format="yyyy-MM"
+                @change="searchByDate(pageInfo.selectDate)"
+              >
               </el-date-picker>
             </div>
           </div>
@@ -62,113 +90,126 @@
 </template>
 
 <script>
-import AwHeader from '../../components/web/public/Header'
-import AwFooter from '../../components/web/public/Footer'
-import NewsList from '../../components/web/newsList'
-import HotNews from '../../components/web/hotNews'
+import AwHeader from "../../components/web/public/Header";
+import AwFooter from "../../components/web/public/Footer";
+import NewsList from "../../components/web/newsList";
+import HotNews from "../../components/web/hotNews";
+import { getNews } from "@/api/news";
 
 export default {
-  name: 'news',
+  name: "news",
   components: {
     HotNews,
     NewsList,
     AwFooter,
-    AwHeader
+    AwHeader,
   },
-  data () {
+  data() {
     return {
-      searchNews: '',
+      total: 1,
+      searchNews: "",
       newsItems: {},
       pageInfo: {
-        activeName: '1',
+        activeName: "1",
         // 当前页码
         pagenum: 1,
         // 当前每页显示多少条数据
         pagesize: 5,
-        selectDate: ''
+        selectDate: "",
       },
       // 单页隐藏
-      singlePage: '',
+      singlePage: "",
       // 卡片新闻
       recomNews: [],
-      selectDate: '',
+      selectDate: "",
       // 新闻搜索
-      searchList: []
+      searchList: [],
       // autocompleteFlag: false
-    }
+    };
   },
   methods: {
     // 关键词搜索新闻
-    async querySearchAsync (queryString, cb) {
-      this.searchList = []
-      const { data: res } = await this.$http.get('/web/searchnews/' + queryString)
-      if (res.status !== 200) {
-      } else {
-        // this.$message.success('获取成功')
-        this.searchList = res.data.list
-      }
-      const newHtml = `<span style="color: #3370ff">${queryString}</span>`
-      this.searchList.forEach(item => {
-        item.news_title = item.news_title.replace(queryString, newHtml)
-        item.news_desc = item.news_desc.replace(queryString, newHtml)
-        // item.news_desc = item.news_desc.replace(queryString, newHtml)
-      })
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        cb(this.searchList)
-      }, 1000 * Math.random())
+    async querySearchAsync(queryString, cb) {
+      this.searchList = [];
+      var query = {};
+      query.pageSize = this.pageInfo.pagesize;
+      query.pageNum = this.pageInfo.pagenum;
+      query.title = queryString;
+      getNews(query).then((res) => {
+        if (res.status !== 200) {
+          this.searchList = {};
+        } else {
+          // this.$message.success('获取成功')
+          this.searchList = res.data.rows;
+        }
+        const newHtml = `<span style="color: #3370ff">${queryString}</span>`;
+        this.searchList.forEach((item) => {
+          item.title = item.title.replace(queryString, newHtml);
+          item.intro = item.intro.replace(queryString, newHtml);
+        });
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(this.searchList);
+        }, 1000 * Math.random());
+      });
+      // const { data: res } = await this.$http.get(
+      //   "/web/searchnews/" + queryString
+      // );
+      // if (res.status !== 200) {
+      // } else {
+      //   // this.$message.success('获取成功')
+      //   this.searchList = res.data.list;
+      // }
+      // const newHtml = `<span style="color: #3370ff">${queryString}</span>`;
+      // this.searchList.forEach((item) => {
+      //   item.news_title = item.news_title.replace(queryString, newHtml);
+      //   item.news_desc = item.news_desc.replace(queryString, newHtml);
+      //   // item.news_desc = item.news_desc.replace(queryString, newHtml)
+      // });
+      // clearTimeout(this.timeout);
+      // this.timeout = setTimeout(() => {
+      //   cb(this.searchList);
+      // }, 1000 * Math.random());
     },
     // 解决 clearable 搜索框后再次输入不显示下拉
-    searchHandle () {
-      if (this.autocompleteFlag) this.$refs.autocomplete.activated = true
+    searchHandle() {
+      if (this.autocompleteFlag) this.$refs.autocomplete.activated = true;
     },
     // 新闻列表选项卡切换
-    handleClick (tab, event) {
-      this.getNewsItems()
+    handleClick(tab, event) {
+      this.getNewsItems();
     },
     // handleSizeChange (val) {
     //   console.log(`每页 ${val} 条`)
     // },
     // 新闻列表页码切换
-    handleCurrentChange (val) {
+    handleCurrentChange(val) {
       // console.log(`当前页: ${val}`)
-      this.getNewsItems()
+      this.getNewsItems();
     },
     // 根据新闻 类型、日期 查询新闻，并按日期排序
 
-
     //!!!
-    async getNewsItems () {
-      this.newsItems={
-        "list": [
-            {
-            "id": "1705164616732737537",
-            "title": "论强会思六全现",
-            "pic": "http://dummyimage.com/180x150",
-            "intro": "农天也立方这前至着消方流本。机地员了我细计线交战属我权四面。点组联般适义节选何色被结明红。按回天系想低议把通往已最京林带科。求白米第装共分海及热或转转务。"
-        },
-        {
-            "id": "1705164566786965505",
-            "title": "品习现被六",
-            "pic": "http://dummyimage.com/88x31",
-            "intro": "员处构连专联列精调调权算权明。样还众调我确九使清变料应但。性来至中新十养手增时及连口往由连确。拉达交将领行按目便文部片式实斗。有已活圆已包张算再了五素立标。定称技算将从阶上地同然何门支她。"
-        },
-        {
-            "id": "1705164490312220674",
-            "title": "委后受",
-            "pic": "http://dummyimage.com/468x60",
-            "intro": "山维六正何本点土生三太果思战织后片。装位收究养须认者什受务且图合务太。表我它高通象带叫相整质照消话。信和如采已知交参以最根只社。"
-        },
-        {
-            "id": "1705158267261149186",
-            "title": "据十般观相",
-            "pic": "http://dummyimage.com/120x240",
-            "intro": "市件决研反统属王统心公斯商有。全中联同件边最确斗件理组她把质安提。习里流圆确品声气第圆保把或战少周带。写按四情明切西资什资声术问合。些效社保叫须究科那者热角所习果率。"
+    async getNewsItems() {
+      var query = {};
+      query.pageSize = this.pageInfo.pagesize;
+      query.pageNum = this.pageInfo.pagenum;
+
+      // console.log(`output->query`,query)
+      getNews(query).then((res) => {
+        // console.log(`output->res`, res);
+        if (res.status !== 200) {
+          this.newsItems = {};
+        } else {
+          // this.$message.success('获取成功')
+          this.newsItems = res.data.rows;
+          this.total = res.data.total;
+          if (this.total <= this.pageInfo.pagesize) {
+            this.singlePage = true;
+          }
         }
-        ],
-        "total": 5,
-        "limit": 10
-    }
+      });
+
       // const { data: res } = await this.$http.get('/web/newslist', { params: this.pageInfo })
       // if (res.status !== 200) {
       //   this.newsItems = {}
@@ -180,9 +221,9 @@ export default {
       //   }
       // }
     },
-    searchByDate (data) {
+    searchByDate(data) {
       // console.log(data)
-      this.getNewsItems()
+      this.getNewsItems();
     },
 
     // async getRecomNews () {
@@ -195,38 +236,38 @@ export default {
     //   }
     // }
   },
-  created () {
-    this.getNewsItems()
+  created() {
+    this.getNewsItems();
     // this.getRecomNews()
   },
-  mounted () {
-    this.$store.commit('setHeaderLogo', {
-      headerLogoShow: false
-    })
-    this.$store.commit('setShadowActive', {
-      headerShadowActive: false
-    })
-    this.$store.commit('setNavDarkActive', {
-      navDarkActive: true
-    })
-    this.$store.commit('setHeaderShow', {
-      headerShow: false
-    })
+  mounted() {
+    this.$store.commit("setHeaderLogo", {
+      headerLogoShow: false,
+    });
+    this.$store.commit("setShadowActive", {
+      headerShadowActive: false,
+    });
+    this.$store.commit("setNavDarkActive", {
+      navDarkActive: true,
+    });
+    this.$store.commit("setHeaderShow", {
+      headerShow: false,
+    });
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     // 导航离开该组件的对应路由时调用
     // 可以访问组件实例 `this`
-    if (from.name === 'news') {
-      this.$store.commit('setNavDarkActive', {
-        navDarkActive: false
-      })
-      this.$store.commit('setHeaderLogo', {
-        headerLogoShow: true
-      })
-      next()
+    if (from.name === "news") {
+      this.$store.commit("setNavDarkActive", {
+        navDarkActive: false,
+      });
+      this.$store.commit("setHeaderLogo", {
+        headerLogoShow: true,
+      });
+      next();
     }
-  }
-}
+  },
+};
 </script>
 
 <style lang = "less" scoped>
@@ -237,7 +278,7 @@ export default {
 }
 
 .news_header {
-  background-color: rgba(255, 255, 255, .5);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   //border-bottom: 1px solid #eff0f1;
 }
@@ -248,8 +289,10 @@ export default {
   //background-size: cover;
 }
 
-.newslist{
+.newslist {
   margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
 }
 .news-banner {
   width: 100%;
@@ -290,7 +333,7 @@ export default {
     height: 46px;
     line-height: 46px;
     border-radius: 30px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   }
 }
 
@@ -310,7 +353,7 @@ export default {
       width: 280px;
       height: 160px;
       overflow: hidden;
-      color: #FFFFFF;
+      color: #ffffff;
     }
 
     .news-card-item {
@@ -353,7 +396,7 @@ export default {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: all .4s ease-in-out;
+      transition: all 0.4s ease-in-out;
     }
   }
 
@@ -370,7 +413,7 @@ export default {
     top: 43px;
     width: 100%;
     height: 2px;
-    background-color: #E4E7ED;
+    background-color: #e4e7ed;
     z-index: 1;
   }
 
@@ -433,7 +476,8 @@ export default {
         line-height: 30px;
       }
 
-      /deep/ .el-input__prefix, /deep/ .el-input__suffix {
+      /deep/ .el-input__prefix,
+      /deep/ .el-input__suffix {
         top: -4px;
       }
 
@@ -445,7 +489,6 @@ export default {
     /deep/ .el-card__body {
       padding-top: 0;
     }
-
   }
 }
 
@@ -475,7 +518,7 @@ export default {
     }
 
     &.highlighted {
-      background: #edf6ff !important
+      background: #edf6ff !important;
     }
 
     .highlighted .addr {

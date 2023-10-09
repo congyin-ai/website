@@ -5,14 +5,14 @@
       <div class = "left">
         <el-breadcrumb separator-class = "el-icon-arrow-right">
           <el-breadcrumb-item :to = "{ path: '/index' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ news_detail.type }}</el-breadcrumb-item>
+          <!-- <el-breadcrumb-item>{{ news_detail.type }}</el-breadcrumb-item> -->
           <el-breadcrumb-item>{{ news_detail.title }}</el-breadcrumb-item>
         </el-breadcrumb>
         <div class = "content">
           <h1>{{ news_detail.title }}</h1>
-          <span>{{ news_detail.publish_time }}</span>
+          <span>{{ news_detail.postedTime }}</span>
           <el-divider><i class = "el-icon-view"></i></el-divider>
-          <article class = "article" v-html = "news_detail.content"></article>
+          <article class = "article" v-html = "processedContent"></article>
         </div>
       </div>
       <hot-news class = "right"></hot-news>
@@ -25,7 +25,7 @@
 import AwHeader from '../../components/web/public/Header'
 import AwFooter from '../../components/web/public/Footer'
 import HotNews from '../../components/web/hotNews'
-
+import {getDetailedNews} from '@/api/news'
 export default {
   name: 'newsDetail',
   components: {
@@ -40,18 +40,29 @@ export default {
         publish_time: '',
         content: '',
         type: ''
-      }
+      },
+      // news_detail: {
+      //   content: '<p><img src="/images/image.jpg" alt="Image"></p>'
+      // },
+      prefix: 'http://zrbridge.top:12506'
     }
   },
   computed: {
     news_path () {
       return this.$route.params.id
+    },
+    processedContent() {
+      const regex = /<img(.*?)src="(.*?)"(.*?)>/g;
+      const updatedContent = this.news_detail.content.replace(regex, `<img$1src="${this.prefix}$2"$3>`);
+      return updatedContent;
     }
+
   },
   created () {
     this.getNewsDetail()
   },
   mounted () {
+    this.news_detail.content = this.processedContent;
     this.$store.commit('setHeaderLogo', {
       headerLogoShow: false
     })
@@ -89,18 +100,26 @@ export default {
   methods: {
     // 获取新闻详情
     async getNewsDetail () {
-      const { data: res } = await this.$http.get('/web/article/' + this.news_path)
-      if (res.status !== 200) {
-        console.log(res)
-      } else {
-        // this.$message.success('获取成功')
-        this.news_detail = {
-          title: res.data.news_detail.news_title,
-          publish_time: res.data.news_detail.publish_time,
-          content: res.data.news_detail.news_content,
-          type: res.data.news_detail.aw_news_type.type_name
+      // const { data: res } = await this.$http.get('/web/article/' + this.news_path)
+      getDetailedNews(this.news_path).then(
+        res=>{
+          console.log(`output->res`,res)
+          this.news_detail=res.data.data
         }
-      }
+
+      )
+      // console.log(`output->data`,res)
+      // if (res.status !== 200) {
+      //   // console.log(res)
+      // } else {
+      //   // this.$message.success('获取成功')
+      //   this.news_detail = {
+      //     title: res.data.news_detail.news_title,
+      //     publish_time: res.data.news_detail.publish_time,
+      //     content: res.data.news_detail.news_content,
+      //     type: res.data.news_detail.aw_news_type.type_name
+      //   }
+      // }
     }
   }
 }
@@ -112,6 +131,9 @@ export default {
   backdrop-filter: blur(10px);
   //border-bottom: 1px solid #eff0f1;
 }
+/* .news-detail{
+  height: 100vh;
+} */
 
 .container {
   padding-top: 60px;
@@ -120,7 +142,7 @@ export default {
   justify-content: space-between;
   max-width: 1200px;
   //background: #d3dce6;
-  min-height: 580px;
+  min-height: 70vh;
   margin: 0 auto;
 }
 

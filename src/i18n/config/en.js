@@ -36,7 +36,8 @@ const en = {
     },
     news: {
         title: 'our news',
-        subtitle:'to learn more about us'
+        subtitle: 'to learn more about us',
+        search:'input news key words'
     },
     research: {
         academic: {
@@ -69,6 +70,17 @@ const en = {
     langs: {
         zh: 'zh',
         en:'en'
+    },
+    login: {
+        username: 'username',
+        password: 'password',
+        login: 'Log in',
+        title1: "Don't have an account?",
+        title2:'Have an account?',
+        signup: 'Sign up',
+        email: 'email',
+        fullname: 'fullname',
+        
     }
     
 }

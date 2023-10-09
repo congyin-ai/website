@@ -36,7 +36,8 @@ const zh = {
     },
     news: {
         title: '新视界',
-        subtitle:'了解更多新闻'
+        subtitle: '了解更多新闻',
+        search:'请输入新闻关键词'
     },
     research: {
         academic: {
@@ -70,6 +71,16 @@ const zh = {
     langs: {
         zh: '中文',
         en:'英文'
+    },
+    login: {
+        username: '用户名',
+        password: '密码',
+        login: '登录',
+        title1: '没有账号？',
+        title2:'已有帐号',
+        signup: '注册',
+        email: '邮箱',
+        fullname: '全名',
     }
 }
 export default zh;

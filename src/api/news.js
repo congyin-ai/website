@@ -1,18 +1,22 @@
 import instance from "../axios/index-dev";
 
-export function getnews(query){
+export function getNews(query){
     return instance({
-        url: '/thesis/detail',
+        url: '/web/news/web/List',
         // url:'/112571926/'+query,
+        headers: {
+          region: 0
+        },
         method: 'get',
-        // params: query
+        params: query
     })
 }
 
-export function getDetailedPaper(query){
+export function getDetailedNews(query){
     return instance({
-      url: '/thesis/detail/'+ query,
+      url: '/web/news/web/'+ query,
       method: 'get',
+      
     })
 }
 

@@ -72,25 +72,20 @@
                 <input
                   name="tele"
                   :placeholder="$t('login.tele')"
-                  type="text"
+                  type="number"
                   v-model="vcodeform.tele"
                 />
-                <!-- name="verifyCode"
-                    :placeholder="$t('login.verifyCode')"
-                    type="text"
-                    class="vcodeinput" -->
                 <div class="vcode">
                   <el-input
                     :placeholder="$t('login.verifyCode')"
-                    class="vcodeinput"
-                    type="text"
+                    type="number"
                     v-model="vcodeform.vcode"
                   ></el-input>
 
                   <el-button
                     @click="getVerCode('login')"
                     :disabled="disable"
-                    style="font-size: 18px"
+                    style="font-size: 15px;"
                     >{{ buttonName }}</el-button
                   >
                 </div>
@@ -106,6 +101,8 @@
                 <div class="title1">
                   <h2>{{ $t("login.signup") }}</h2>
                 </div>
+                <!-- <validateForm></validateForm> -->
+                
                 <input
                   name="username"
                   :placeholder="$t('login.username')"
@@ -136,21 +133,20 @@
                 /><input
                   name="tele"
                   :placeholder="$t('login.tele')"
-                  type="text"
+                  type="number"
                   v-model="registryform.phone"
                 />
                 <div class="vcode">
                   <el-input
                     :placeholder="$t('login.verifyCode')"
-                    class="vcodeinput"
-                    type="text"
+                    type="number"
                     v-model="registryform.smsCode"
                   ></el-input>
 
                   <el-button
                     @click="getVerCode('signup')"
                     :disabled="disable"
-                    style="font-size: 18px"
+                    style="font-size: 15px"
                     >{{ buttonName }}</el-button
                   >
                 </div>
@@ -168,7 +164,9 @@
 
 <script>
 import AwHeader from "../../components/web/public/Header";
+// import validateForm from "../../components/web/validateForm"
 import { passwordLogin, vcodeLogin, getVerifyCode, registry } from "@/api/auth";
+
 
 export default {
   data() {
@@ -201,6 +199,7 @@ export default {
   },
   components: {
     AwHeader,
+    // validateForm
   },
 
   methods: {
@@ -247,7 +246,7 @@ export default {
         console.log(`output->res`, res);
         if (res.data.code == 200) {
           this.$message.success(res.data.msg);
-          this.activateContainer()
+          this.activateContainer();
         }
       });
     },
@@ -374,12 +373,12 @@ export default {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   // margin-bottom: 10px;
   margin-left: 20%;
-  margin-top: -50px;
+  margin-top: -15%;
   // text-align:center
 }
 .checkbox {
-  margin-top: 10px;
-  margin-left: 60%;
+  // margin-top: 2%;
+  margin-left: 50%;
   transform: scale(2, 2);
   // height: 20px;
   // width: 20px;
@@ -393,21 +392,24 @@ export default {
 
 .vcode {
   display: flex;
-  width: 285px;
-  margin-left: 110px;
+  width: 55%;
+  height: 5.5%;
+  margin-left: 22.5%;
 }
 .el-input /deep/ .el-input__inner {
-  height: 57px !important;
-  border-width: 2px;
+  height: 100% !important;
+  border-width: 1px;
   border-color: rgb(118, 118, 118);
   border-radius: 0px;
-  font-size: 18px;
+  font-size: 15px;
   color: black;
 }
-
-.vcodeinput {
-  /* margin-top: 30px; */
-  /* margin-bottom: 0; */
+::v-deep input::-webkit-outer-spin-button,
+::v-deep input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+::v-deep input[type='number'] {
+  -moz-appearance: textfield !important;
 }
 
 .table {
@@ -489,14 +491,15 @@ export default {
 }
 .container .btn,
 .container input:not([type="checkbox"]) {
-  padding: 10px 15px;
+  padding: 1.5% 2%;
   // border: 30px;
 }
 .container input:not([type="checkbox"]) {
   margin: 0 auto 20px;
   display: block;
   width: 50%; //input width
-  height: 5%;
+  height: 3%;
+  font-size: 15px;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
   -webkit-transition: all 0.3s;
@@ -509,8 +512,9 @@ export default {
 .container .container-forms .container-info .info-item {
   text-align: center;
   font-size: 26px; //两个按钮字体大小
-  width: 500px;
-  height: 420px; //两个按钮的位置
+  width: 50%;
+  margin-top: 10%;
+  height: 20%; //两个按钮的位置
   display: inline-block;
   vertical-align: top;
   color: #fff;
@@ -542,10 +546,10 @@ export default {
 .container .container-form {
   overflow: hidden;
   position: absolute;
-  left: 5%; //移动页面的位置
-  top: -40%;
-  width: 505px;
-  height: 800px; //移动页面的宽高
+  left: 10%; //移动页面的位置
+  top: -60%;
+  width: 48%;
+  height: 280%; //移动页面的宽高
   background-color: #fff;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
   -moz-transition: all 0.5s;
@@ -601,7 +605,7 @@ export default {
   height: 400px; //点击之后左侧滑块大小位置
 }
 .container.log-in .container-form {
-  left: 465px;
+  left: 42%;
 }
 .container.log-in .container-form .form-item.sign-up {
   left: 0;

@@ -85,7 +85,7 @@
                   <el-button
                     @click="getVerCode('login')"
                     :disabled="disable"
-                    style="font-size: 15px;"
+                    style="font-size: 15px"
                     >{{ buttonName }}</el-button
                   >
                 </div>
@@ -101,9 +101,65 @@
                 <div class="title1">
                   <h2>{{ $t("login.signup") }}</h2>
                 </div>
-                <!-- <validateForm></validateForm> -->
-                
-                <input
+                <el-form
+                  :model="registryform"
+                  status-icon
+                  :rules="rules"
+                  ref="ruleForm"
+                  label-width="30.5%"
+                >
+                  <el-form-item prop="username">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.username')"
+                      type="text"
+                      v-model="registryform.username"
+                      autocomplete="off"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="password">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.password')"
+                      type="password"
+                      v-model="registryform.password"
+                      autocomplete="off"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="company">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.com')"
+                      v-model="registryform.company"
+                      type="text"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="userRealName">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.fullname')"
+                      v-model="registryform.userRealName"
+                      type="text"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="email">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.email')"
+                      v-model="registryform.email"
+                      type="text"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="phone">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.tele')"
+                      v-model.number="registryform.phone"
+                      type="number"
+                    ></el-input>
+                  </el-form-item>
+                </el-form>
+                <!-- <input
                   name="username"
                   :placeholder="$t('login.username')"
                   type="text"
@@ -135,7 +191,7 @@
                   :placeholder="$t('login.tele')"
                   type="number"
                   v-model="registryform.phone"
-                />
+                /> -->
                 <div class="vcode">
                   <el-input
                     :placeholder="$t('login.verifyCode')"
@@ -167,10 +223,50 @@ import AwHeader from "../../components/web/public/Header";
 // import validateForm from "../../components/web/validateForm"
 import { passwordLogin, vcodeLogin, getVerifyCode, registry } from "@/api/auth";
 
-
 export default {
   data() {
     return {
+      rules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 5, max: 16, message: "用户名长度应为5-16位", trigger: "blur" },
+          {
+            pattern: /^[^!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/,
+            message: "用户名不能包含特殊字符",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 8, max: 16, message: "密码长度应为8-16位", trigger: "blur" },
+          {
+            pattern: /^[^!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/,
+            message: "密码不能包含特殊字符",
+            trigger: "blur",
+          },
+          {
+            pattern: /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{8,16}$/,
+            message: "密码必须包含数字和字母",
+            trigger: "blur",
+          },
+        ],
+        // company: [{ validator: validUsername, trigger: "blur" }],
+        userRealName: [
+          { required: true, message: "真实姓名不能为空", trigger: "blur" },
+        ],
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { type: "email", message: "邮箱格式不正确", trigger: "blur" },
+        ],
+        phone: [
+          { required: true, message: "请输入手机号", trigger: "blur" },
+          {
+            pattern: /^1[3456789]\d{9}$/,
+            message: "手机号格式不正确",
+            trigger: "blur",
+          },
+        ],
+      },
       isLogIn: false,
       isFormActive: false,
       flag: true,
@@ -376,6 +472,12 @@ export default {
   margin-top: -15%;
   // text-align:center
 }
+.el-form-item {
+  width: 80%;
+  margin-left: -2%;
+  // height: 30px;
+}
+
 .checkbox {
   // margin-top: 2%;
   margin-left: 50%;
@@ -408,8 +510,12 @@ export default {
 ::v-deep input::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
 }
-::v-deep input[type='number'] {
+::v-deep input[type="number"] {
   -moz-appearance: textfield !important;
+}
+
+.valid {
+  height: 36.3px;
 }
 
 .table {

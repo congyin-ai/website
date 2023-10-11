@@ -71,7 +71,7 @@ img{
     margin: 0;
     padding: 0;
 }
-button,
+
 optgroup,
 select,
 textarea {
@@ -82,12 +82,13 @@ textarea {
     border: 0;
     background: 0;
 }
-
+/* button, */
 input{
-
+    /* border: 5px; */
+    font-size: 18px;
 }
 
-button:focus,
+/* button:focus, */
 /* input:focus, */
 optgroup:focus,
 select:focus,

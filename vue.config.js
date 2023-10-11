@@ -3,39 +3,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin') // 开启压缩
 const isProduction = process.env.NODE_ENV === 'production'
 
-// 优化打包
-// externals
-// const externals = {
-//   vue: 'Vue',
-//   'vue-router': 'VueRouter',
-//   vuex: 'Vuex',
-//   'element-ui': 'ElementUI',
-//   // 'mavon-editor': 'mavonEditor',
-//   axios: 'axios'
-// }
-// const cdn = {
-//   // 开发环境
-//   dev: {
-//     css: [],
-//     js: []
-//   },
-//   // 生产环境
-//   build: {
-//     css: [
-//       'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-5-y/element-ui/2.15.1/theme-chalk/index.min.css',
-//     ],
-//     js: [
-//       'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-5-y/vue/2.6.11/vue.min.js',
-//       'https://lf3-cdn-tos.bytecdntp.com/cdn/expire-5-y/vue-router/3.2.0/vue-router.min.js',
-//       'https://lf6-cdn-tos.bytecdntp.com/cdn/expire-5-y/vuex/3.6.1/vuex.min.js',
-//       'https://lf26-cdn-tos.bytecdntp.com/cdn/expire-5-y/element-ui/2.15.1/index.min.js',
-//       // 'https://cdn.jsdelivr.net/npm/mavon-editor@2.9.1/dist/mavon-editor.min.js',
-//       'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-5-y/axios/0.18.0/axios.min.js'
-//       // 'https://unpkg.com/element-ui/lib/index.js'
-//     ]
-//   }
-// }
-
 module.exports = {
   publicPath: '/',
   lintOnSave: false,

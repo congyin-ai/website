@@ -324,7 +324,7 @@ h2 {
 </style>
 <style>
 .el-menu--popup{
-  min-width: auto !important;
+  min-width: 150px !important;
   border-radius: 10px !important;
 }
 </style>

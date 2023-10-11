@@ -77,10 +77,18 @@ const zh = {
         password: '密码',
         login: '登录',
         title1: '没有账号？',
-        title2:'已有帐号',
+        title2:'已有帐号?',
         signup: '注册',
         email: '邮箱',
         fullname: '全名',
+        tele: '手机号',
+        verifyCode: '验证码',
+        login1: '密码登录',
+        login2: '验证码登录',
+        remember: '记住密码',
+        getCode: '获取验证码',
+        signup: '注册会员',
+        com:'公司'
     }
 }
 export default zh;

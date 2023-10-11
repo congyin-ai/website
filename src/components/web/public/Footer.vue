@@ -1,54 +1,58 @@
 <template>
-  <div class = "footer_container" :style="footerHeight + 'px'">
-    <div class = "footer_content">
-      <div class = "footer_logo footer-content-column">
-        <div class = "logo-container">
-          <img :src = "logo_url" alt = "">
+  <div class="footer_container" :style="footerHeight + 'px'">
+    <div class="footer_content">
+      <div class="footer_logo footer-content-column">
+        <div class="logo-container">
+          <img :src="logo_url" alt="" />
           <div class="logo-text">
-            <p class="text1">{{$t("footer.title")}}</p>
-            <p class="text2">{{$t("footer.subtitle")}}</p>
+            <p class="text1">{{ $t("footer.title") }}</p>
+            <p class="text2">{{ $t("footer.subtitle") }}</p>
           </div>
         </div>
-        <h2>{{$t("footer.copyright")}}</h2>
-        <h2>{{$t("footer.securityrecord")}}</h2>
+        <h2>{{ $t("footer.copyright") }}</h2>
+        <h2>{{ $t("footer.securityrecord") }}</h2>
       </div>
-      <div class = "about_us footer-content-column">
-        <h2>{{$t("footer.aboutus")}}</h2>
-        <ul class = "about_list">
+      <div class="about_us footer-content-column">
+        <h2>{{ $t("footer.aboutus") }}</h2>
+        <ul class="about_list">
           <li>
-            <router-link to = "/job" target = "_blank">{{$t("footer.culture")}}</router-link>
+            <router-link to="/job" target="_blank">{{
+              $t("footer.culture")
+            }}</router-link>
           </li>
         </ul>
       </div>
-      <div class = "contact_us footer-content-column">
-        <h2>{{$t("footer.contactus")}}</h2>
-        <ul class = "contact_list">
+      <div class="contact_us footer-content-column">
+        <h2>{{ $t("footer.contactus") }}</h2>
+        <ul class="contact_list">
           <li>
-            <a href = "'mailto:'+item.email">{{ $t("footer.medium") }}</a>
+            <a href="'mailto:'+item.email">{{ $t("footer.medium") }}</a>
           </li>
           <li>
-            <a href = "'mailto:'+item.email">{{ $t("footer.recruit") }}</a>
+            <a href="'mailto:'+item.email">{{ $t("footer.recruit") }}</a>
           </li>
           <li>
-            <a href = "'mailto:'+item.email">{{ $t("footer.cooperate") }}</a>
+            <a href="'mailto:'+item.email">{{ $t("footer.cooperate") }}</a>
           </li>
           <li>
-            <a href = "'mailto:'+item.email">{{ $t("footer.ads") }}</a>
+            <a href="'mailto:'+item.email">{{ $t("footer.ads") }}</a>
           </li>
         </ul>
       </div>
-      <div class = "focus_us footer-content-column">
-        <h2>{{$t("footer.QR.title")}}</h2>
-        <div class = "media">
-          <div :class = "item.name" v-for = "(item,index) in focus_icon" :key = "index">
-            <el-popover
-              placement = "top"
-              trigger = "hover">
-              <div class = "qr_popover">
-                <img :src = "item.qr" alt = "">
-                <h2>{{ item.info }}</h2>
+      <div class="focus_us footer-content-column">
+        <h2>{{ $t("footer.QR.title") }}</h2>
+        <div class="media">
+          <div
+            :class="item.name"
+            v-for="(item, index) in focus_icon"
+            :key="index"
+          >
+            <el-popover placement="top" trigger="hover">
+              <div class="qr_popover">
+                <img :src="item.qr" alt="" />
+                <!-- <h2>{{ item.info }}</h2> -->
               </div>
-              <img :src = "item.path" :alt = "item.name" slot = "reference">
+              <img :src="item.path" :alt="item.name" slot="reference" />
             </el-popover>
           </div>
         </div>
@@ -59,12 +63,12 @@
 
 <script>
 export default {
-  name: 'Footer',
-  data () {
+  name: "Footer",
+  data() {
     return {
-      footerHeight: '',
-      curWidth: '',
-      logo_url: require('../../../assets/img/index/logoColor.png'),
+      footerHeight: "",
+      curWidth: "",
+      logo_url: require("../../../assets/img/index/logoColor.png"),
       // contact_way: [
       //   {
       //     name: this.$t("footer.medium"),
@@ -85,28 +89,28 @@ export default {
       // ],
       focus_icon: [
         {
-          name: 'weibo',
-          path: require('../../../assets/img/focus/weibo.png'),
-          qr: require('../../../assets/img/focus/qr_weixin.png'),
-          info: this.$t("footer.QR.weibo")
+          name: "weibo",
+          path: require("../../../assets/img/focus/weibo.png"),
+          qr: require("../../../assets/img/focus/qr_weixin.png"),
+          // info: this.$t("footer.QR.weibo"),
         },
         {
-          name: 'weixin',
-          path: require('../../../assets/img/focus/weixin.svg'),
-          qr: require('../../../assets/img/focus/qr_weixin.png'),
-          info: this.$t("footer.QR.wechat")
+          name: "weixin",
+          path: require("../../../assets/img/focus/weixin.svg"),
+          qr: require("../../../assets/img/focus/qr_weixin.png"),
+          // info: this.$t("footer.QR.wechat"),
         },
         {
-          name: 'bilibili',
-          path: require('../../../assets/img/focus/bilibili.png'),
-          qr: require('../../../assets/img/focus/qr_weixin.png'),
-          info: this.$t("footer.QR.bilibili")
-        }
-      ]
-    }
+          name: "bilibili",
+          path: require("../../../assets/img/focus/bilibili.png"),
+          qr: require("../../../assets/img/focus/qr_weixin.png"),
+          // info: this.$t("footer.QR.bilibili"),
+        },
+      ],
+    };
   },
+  computed: {},
   methods: {
-
     // setFooterHeight () {
     //   this.curWidth = window.innerWidth
     //   if (this.curWidth <= 991) {
@@ -116,20 +120,20 @@ export default {
     //   }
     // }
   },
-  created () {
+  created() {
     // 页面创建时执行一次getHeight进行赋值，顺道绑定resize事件
     // window.addEventListener('resize', this.setFooterHeight)
     // this.setFooterHeight()
-  }
-}
+  },
+};
 </script>
 
 <style lang = "less" scoped>
-*{
+* {
   margin: 0;
   padding: 0;
 }
-h2{
+h2 {
   font-size: 100%;
   font-weight: 400;
   font-variant: normal;
@@ -168,7 +172,8 @@ h2{
       font-weight: bold;
     }
 
-    .about_list, .contact_list {
+    .about_list,
+    .contact_list {
       text-align: center;
       font-size: 14px;
       line-height: 22px;
@@ -183,7 +188,8 @@ h2{
     }
   }
 
-  .about_us, .contact_us {
+  .about_us,
+  .contact_us {
     max-width: 202px;
   }
 
@@ -238,17 +244,17 @@ h2{
       img {
         height: 50px;
       }
-      .logo-text{
+      .logo-text {
         margin-left: 15px;
         position: relative;
         bottom: -6px;
       }
-      .text1{
+      .text1 {
         font-size: 21px;
         font-weight: bold;
         margin: 0;
       }
-      .text2{
+      .text2 {
         font-size: 12px;
         margin: 0;
       }
@@ -269,13 +275,13 @@ h2{
       }
       padding-left: 0;
     }
-    .focus_us div:last-of-type > span{
+    .focus_us div:last-of-type > span {
       margin-right: 0;
     }
-    .media{
+    .media {
       justify-content: center;
     }
-    .logo-container{
+    .logo-container {
       justify-content: center;
       text-align: left;
     }

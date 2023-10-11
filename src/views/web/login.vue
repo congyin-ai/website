@@ -1,23 +1,27 @@
 <template>
   <div class="login">
     <AwHeader></AwHeader>
-    <div class="container" :class="{ 'log-in': isLogIn, 'active': isFormActive }">
+    <div class="container" :class="{ 'log-in': isLogIn, active: isFormActive }">
       <div class="box"></div>
       <div class="container-forms">
         <div class="container-info">
           <div class="info-item">
             <div class="table">
               <div class="table-cell">
-                <p>{{$t('login.title2')}}</p>
-                <button class="btn" @click="toggleContainer">{{$t('login.login')}}</button>
+                <p>{{ $t("login.title2") }}</p>
+                <button class="btn" @click="toggleContainer">
+                  {{ $t("login.login") }}
+                </button>
               </div>
             </div>
           </div>
           <div class="info-item">
             <div class="table">
               <div class="table-cell">
-                <p>{{$t('login.title1')}}</p>
-                <button class="btn" @click="toggleContainer">{{$t('login.signup')}}</button>
+                <p>{{ $t("login.title1") }}</p>
+                <button class="btn" @click="toggleContainer">
+                  {{ $t("login.signup") }}
+                </button>
               </div>
             </div>
           </div>
@@ -25,38 +29,134 @@
         <div class="container-form">
           <div class="form-item log-in">
             <div class="table">
-              <div class="table-cell">
+              <div class="table-cell" v-show="flag">
+                <div class="title1">
+                  <h2>{{ $t("login.login1") }}</h2>
+                  <h3 class="switch">
+                    <a href="#" @click.prevent="switchlogin"
+                      >{{ $t("login.login2") }}>></a
+                    >
+                  </h3>
+                </div>
                 <input
-                  name='username'
+                  name="username"
                   :placeholder="$t('login.username')"
                   type="text"
+                  v-model="passwordform.username"
                 /><input
                   name="Password"
                   :placeholder="$t('login.password')"
                   type="Password"
+                  v-model="passwordform.password"
                 />
-                <div class="btn" @click="activateContainer">{{$t('login.login')}}</div>
+                <div>
+                  <input
+                    type="checkbox"
+                    v-model="rememberPassword"
+                    class="checkbox"
+                  />&nbsp<span>{{ $t("login.remember") }}</span>
+                </div>
+                <div class="btn" @click="execlogin()">
+                  {{ $t("login.login") }}
+                </div>
+              </div>
+              <div class="table-cell" v-show="!flag">
+                <div class="title1">
+                  <h2>{{ $t("login.login2") }}</h2>
+                  <h3 class="switch">
+                    <a href="#" @click.prevent="switchlogin"
+                      >{{ $t("login.login1") }}>></a
+                    >
+                  </h3>
+                </div>
+                <input
+                  name="tele"
+                  :placeholder="$t('login.tele')"
+                  type="text"
+                  v-model="vcodeform.tele"
+                />
+                <!-- name="verifyCode"
+                    :placeholder="$t('login.verifyCode')"
+                    type="text"
+                    class="vcodeinput" -->
+                <div class="vcode">
+                  <el-input
+                    :placeholder="$t('login.verifyCode')"
+                    class="vcodeinput"
+                    type="text"
+                    v-model="vcodeform.vcode"
+                  ></el-input>
+
+                  <el-button
+                    @click="getVerCode('login')"
+                    :disabled="disable"
+                    style="font-size: 18px"
+                    >{{ buttonName }}</el-button
+                  >
+                </div>
+                <div class="btn" @click="execlogin()">
+                  {{ $t("login.login") }}
+                </div>
               </div>
             </div>
           </div>
           <div class="form-item sign-up">
             <div class="table">
               <div class="table-cell">
-                <input name="email" :placeholder="$t('login.email')" type="text" />
+                <div class="title1">
+                  <h2>{{ $t("login.signup") }}</h2>
+                </div>
                 <input
-                  name="fullName"
-                  :placeholder="$t('login.fullname')"
-                  type="text"
-                /><input
-                  name="Username"
+                  name="username"
                   :placeholder="$t('login.username')"
                   type="text"
-                /><input
-                  name="Password"
-                  :placeholder="$t('login.password')"
-                  type="Password"
+                  v-model="registryform.username"
                 />
-                <div class="btn" @click="activateContainer">{{$t('login.signup')}}</div>
+                <input
+                  name="password"
+                  :placeholder="$t('login.password')"
+                  type="password"
+                  v-model="registryform.password"
+                />
+                <input
+                  name="com"
+                  :placeholder="$t('login.com')"
+                  type="text"
+                  v-model="registryform.company"
+                /><input
+                  name="fullname"
+                  :placeholder="$t('login.fullname')"
+                  type="text"
+                  v-model="registryform.userRealName"
+                /><input
+                  name="email"
+                  :placeholder="$t('login.email')"
+                  type="text"
+                  v-model="registryform.email"
+                /><input
+                  name="tele"
+                  :placeholder="$t('login.tele')"
+                  type="text"
+                  v-model="registryform.phone"
+                />
+                <div class="vcode">
+                  <el-input
+                    :placeholder="$t('login.verifyCode')"
+                    class="vcodeinput"
+                    type="text"
+                    v-model="registryform.smsCode"
+                  ></el-input>
+
+                  <el-button
+                    @click="getVerCode('signup')"
+                    :disabled="disable"
+                    style="font-size: 18px"
+                    >{{ buttonName }}</el-button
+                  >
+                </div>
+                <div class="btn" @click="execsignup()">
+                  {{ $t("login.signup") }}
+                </div>
               </div>
             </div>
           </div>
@@ -67,26 +167,193 @@
 </template>
 
 <script>
-import AwHeader from '../../components/web/public/Header'
+import AwHeader from "../../components/web/public/Header";
+import { passwordLogin, vcodeLogin, getVerifyCode, registry } from "@/api/auth";
+
 export default {
   data() {
     return {
       isLogIn: false,
-      isFormActive: false
-    }
+      isFormActive: false,
+      flag: true,
+      rememberPassword: false,
+      passwordform: {
+        username: "",
+        password: "",
+      },
+      vcodeform: {
+        vcode: "",
+        tele: "",
+      },
+      registryform: {
+        username: "",
+        password: "",
+        company: "",
+        userRealName: "",
+        email: "",
+        phone: "",
+        smsCode: "",
+      },
+      disable: false,
+      buttonName: this.$t("login.getCode"),
+      count: 59,
+    };
   },
   components: {
-    AwHeader
+    AwHeader,
   },
-  methods:{
+
+  methods: {
     toggleContainer() {
       this.isLogIn = !this.isLogIn;
     },
     activateContainer() {
       this.isFormActive = true;
-    }
-  }
-}
+    },
+    switchlogin() {
+      this.flag = !this.flag;
+    },
+    execlogin() {
+      // 执行登录逻辑
+      if (this.flag == true) {
+        this.getSavedLoginfo();
+        passwordLogin(
+          this.passwordform.username,
+          this.passwordform.password
+        ).then((res) => {
+          console.log(`output->res`, res);
+          if (res.data.code == 200) {
+            this.$message.success(res.data.msg);
+            this.activateContainer();
+          } else {
+            this.$message(res.data.msg);
+          }
+        });
+      } else {
+        vcodeLogin(this.vcodeform.tele, this.vcodeform.vcode).then((res) => {
+          // console.log(`output->res`, res);
+          if (res.data.code == 200) {
+            this.$message.success(res.data.msg);
+            this.activateContainer();
+          } else {
+            this.$message.error(res.data.msg);
+          }
+        });
+      }
+      // 其他登录逻辑...
+    },
+    execsignup() {
+      registry(this.registryform).then((res) => {
+        console.log(`output->res`, res);
+        if (res.data.code == 200) {
+          this.$message.success(res.data.msg);
+          this.activateContainer()
+        }
+      });
+    },
+    disableBtn() {
+      if (this.disable == true) {
+        this.$message({
+          message: "请勿重复点击",
+          type: "warning",
+        });
+      } else {
+        var timeout = setInterval(() => {
+          if (this.count < 1) {
+            this.disable = false;
+            this.buttonName = "获取验证码";
+            this.count = 59;
+            clearInterval(timeout);
+          } else {
+            this.disable = true;
+            this.buttonName = this.count-- + "s后重发";
+          }
+        }, 1000);
+      }
+    },
+    getSavedLoginfo() {
+      if (this.rememberPassword) {
+        // 如果勾选了记住密码，则将用户名和记住密码的状态保存到本地存储
+        localStorage.setItem(
+          "rememberPassword",
+          this.rememberPassword.toString()
+        );
+        localStorage.setItem("username", this.passwordform.username);
+        localStorage.setItem("password", this.passwordform.password);
+      } else {
+        // 否则，清除本地存储中保存的用户名和记住密码的状态
+        localStorage.removeItem("rememberPassword");
+        localStorage.removeItem("username");
+        localStorage.removeItem("password");
+      }
+    },
+    getVerCode(type) {
+      if (type == "login") {
+        console.log("*", this.vcodeform.tele.length);
+        if (this.vcodeform.tele == "") {
+          this.$message({
+            message: "手机号不能为空",
+            type: "warning",
+          });
+        } else if (this.vcodeform.tele.length != 11) {
+          this.$message({
+            message: "请输入11位的手机号码",
+            type: "warning",
+          });
+        } else {
+          getVerifyCode(this.vcodeform.tele, 1).then((res) => {
+            console.log(`output->res`, res);
+            if (res.data.code == 200) {
+              this.$message.success(res.data.msg);
+              this.disableBtn();
+            } else if (res.data.code == 500) {
+              this.$message.warning(res.data.msg + "，请您先注册！");
+              this.toggleContainer();
+            }
+          });
+
+          // console.log("点击了", this.disable);
+        }
+      } else {
+        console.log("*", this.registryform.phone.length);
+        if (this.registryform.phone == "") {
+          this.$message({
+            message: "手机号不能为空",
+            type: "warning",
+          });
+        } else if (this.registryform.phone.length != 11) {
+          this.$message({
+            message: "请输入11位的手机号码",
+            type: "warning",
+          });
+        } else {
+          getVerifyCode(this.registryform.phone, 0).then((res) => {
+            console.log(`output->res`, res);
+            if (res.data.code == 200) {
+              this.$message.success(res.data.msg);
+              this.disableBtn();
+            } else {
+              this.$message.warning(res.data.msg);
+            }
+          });
+
+          // console.log("点击了", this.disable);
+        }
+      }
+    },
+  },
+  mounted() {
+    const rememberPassword = localStorage.getItem("rememberPassword");
+    const savedUsername = localStorage.getItem("username");
+    const savedPassword = localStorage.getItem("password");
+
+    if (rememberPassword && savedUsername) {
+      this.rememberPassword = rememberPassword === "true";
+      this.passwordform.username = savedUsername;
+      this.passwordform.password = savedPassword;
+    } //记住密码
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -102,7 +369,46 @@ export default {
   background-color: #5356ad;
   overflow: hidden;
 }
+.title1 {
+  font-size: 25px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  // margin-bottom: 10px;
+  margin-left: 20%;
+  margin-top: -50px;
+  // text-align:center
+}
+.checkbox {
+  margin-top: 10px;
+  margin-left: 60%;
+  transform: scale(2, 2);
+  // height: 20px;
+  // width: 20px;
+  // vertical-align: bottom;
+}
 
+.switch {
+  margin-left: 50%;
+  font-size: 20px;
+}
+
+.vcode {
+  display: flex;
+  width: 285px;
+  margin-left: 110px;
+}
+.el-input /deep/ .el-input__inner {
+  height: 57px !important;
+  border-width: 2px;
+  border-color: rgb(118, 118, 118);
+  border-radius: 0px;
+  font-size: 18px;
+  color: black;
+}
+
+.vcodeinput {
+  /* margin-top: 30px; */
+  /* margin-bottom: 0; */
+}
 
 .table {
   display: table;
@@ -121,10 +427,10 @@ export default {
 
 .container {
   position: relative;
-  width: 600px;
+  width: 45%;
   margin: 30px auto 0;
-  height: 320px;
-  background-color: #999ede;
+  height: 40%;
+  background-color: #999ade;
   top: 10%;
   margin-top: 20vh;
   -moz-transition: all 0.5s;
@@ -135,7 +441,7 @@ export default {
 .container .box {
   position: absolute;
   left: 0;
-  top: 0;
+  top: 0; //container右下小角位置
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -144,12 +450,12 @@ export default {
 .container .box:after {
   content: " ";
   position: absolute;
-  left: 152px;
-  top: 50px;
+  left: 200px; //右侧划片的位置 before
+  top: 60px;
   background-color: #9297e0;
   transform: rotateX(52deg) rotateY(15deg) rotateZ(-38deg);
-  width: 300px;
-  height: 285px;
+  width: 700px; //右侧划片的大小
+  height: 400px;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -157,10 +463,10 @@ export default {
 }
 .container .box:after {
   background-color: #a5aae4;
-  top: -10px;
-  left: 80px;
-  width: 320px;
-  height: 180px;
+  top: 30px;
+  left: 80px; //左侧划片的大小位置 before
+  width: 700px;
+  height: 400px;
 }
 .container .container-forms {
   position: relative;
@@ -169,7 +475,7 @@ export default {
   cursor: pointer;
   text-align: center;
   margin: 0 auto;
-  width: 100px;
+  width: 40%; //按钮宽度
   color: #fff;
   background-color: #ff73b3;
   opacity: 1;
@@ -182,14 +488,15 @@ export default {
   opacity: 0.7;
 }
 .container .btn,
-.container input {
+.container input:not([type="checkbox"]) {
   padding: 10px 15px;
-  // border: 10px;
+  // border: 30px;
 }
-.container input {
-  margin: 0 auto 15px;
+.container input:not([type="checkbox"]) {
+  margin: 0 auto 20px;
   display: block;
-  width: 220px;
+  width: 50%; //input width
+  height: 5%;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
   -webkit-transition: all 0.3s;
@@ -201,9 +508,9 @@ export default {
 }
 .container .container-forms .container-info .info-item {
   text-align: center;
-  font-size: 16px;
-  width: 300px;
-  height: 320px;
+  font-size: 26px; //两个按钮字体大小
+  width: 500px;
+  height: 420px; //两个按钮的位置
   display: inline-block;
   vertical-align: top;
   color: #fff;
@@ -214,31 +521,31 @@ export default {
   transition: all 0.3s;
 }
 .container .container-forms .container-info .info-item p {
-  font-size: 20px;
-  margin: 20px;
+  font-size: 40px;
+  margin: 30px; //两边title
 }
 .container .container-forms .container-info .info-item .btn {
   background-color: transparent;
   border: 1px solid #fff;
 }
 .container .container-forms .container-info .info-item .table-cell {
-  padding-right: 35px;
+  padding-right: 25px;
 }
 .container
   .container-forms
   .container-info
   .info-item:nth-child(2)
   .table-cell {
-  padding-left: 35px;
+  padding-left: 55px;
   padding-right: 0;
 }
 .container .container-form {
   overflow: hidden;
   position: absolute;
-  left: 30px;
-  top: -30px;
-  width: 305px;
-  height: 380px;
+  left: 5%; //移动页面的位置
+  top: -40%;
+  width: 505px;
+  height: 800px; //移动页面的宽高
   background-color: #fff;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
   -moz-transition: all 0.5s;
@@ -250,9 +557,9 @@ export default {
   content: "✔";
   position: absolute;
   left: 160px;
-  top: -50px;
+  top: 100px;
   color: #5356ad;
-  font-size: 130px;
+  font-size: 250px;
   opacity: 0;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
@@ -262,7 +569,7 @@ export default {
 .container .container-form .btn {
   position: relative;
   box-shadow: 0 0 10px 1px #ff73b3;
-  margin-top: 30px;
+  margin-top: 40px; //按钮margin-top
 }
 .container .form-item {
   position: absolute;
@@ -283,18 +590,18 @@ export default {
 }
 .container.log-in .box:before {
   position: absolute;
-  left: 180px;
-  top: 62px;
-  height: 265px;
+  left: 90px;
+  top: 12px;
+  height: 400px; //点击之后右侧滑块大小位置
 }
 .container.log-in .box:after {
-  top: 22px;
+  top: 42px;
   left: 192px;
-  width: 324px;
-  height: 220px;
+  width: 700px;
+  height: 400px; //点击之后左侧滑块大小位置
 }
 .container.log-in .container-form {
-  left: 265px;
+  left: 465px;
 }
 .container.log-in .container-form .form-item.sign-up {
   left: 0;
@@ -306,25 +613,32 @@ export default {
 }
 .container.active {
   width: 260px;
-  height: 140px;
-  margin-top: -70px;
+  height: 140px; //整体的宽高位置
+  margin-top: 10%;
 }
 .container.active .container-form {
   left: 30px;
-  width: 200px;
+  top: -12%;
+  width: 200px; //对号框的宽高位置
   height: 200px;
 }
 .container.active .container-form:before {
   content: "✔";
   position: absolute;
   left: 51px;
-  top: 5px;
+  top: 5px; //对号的top
   color: #5356ad;
   font-size: 130px;
   opacity: 1;
 }
+
+.container.active h2,
+.container.active a,
+.container.active span,
 .container.active input,
 .container.active .btn,
+.container.active .el-input,
+.container.active .el-button,
 .container.active .info-item {
   display: none;
   opacity: 0;
@@ -339,15 +653,4 @@ export default {
   height: 0%;
   opacity: 0;
 }
-
-.rabbit {
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  z-index: 3;
-  fill: #fff;
-}
-
 </style>

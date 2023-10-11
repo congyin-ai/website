@@ -80,6 +80,13 @@ const en = {
         signup: 'Sign up',
         email: 'email',
         fullname: 'fullname',
+        tele: 'Telephone',
+        verifyCode: 'Verify code',
+        login1: 'Password Log in',
+        login2: 'Verify Code Log in',
+        remember: 'Remember me',
+        getCode: 'Get Verify Code',
+        signup: 'Registered Member',
         
     }
     

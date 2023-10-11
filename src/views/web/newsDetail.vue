@@ -103,7 +103,7 @@ export default {
       // const { data: res } = await this.$http.get('/web/article/' + this.news_path)
       getDetailedNews(this.news_path).then(
         res=>{
-          console.log(`output->res`,res)
+          // console.log(`output->res`,res)
           this.news_detail=res.data.data
         }
 

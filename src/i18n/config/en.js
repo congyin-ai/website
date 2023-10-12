@@ -86,7 +86,7 @@ const en = {
         login2: 'Verify Code Log in',
         remember: 'Remember me',
         getCode: 'Get Verify Code',
-        signup: 'Registered Member',
+        signuptitle: 'Registered Member',
         
     }
     

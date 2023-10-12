@@ -87,7 +87,7 @@ const zh = {
         login2: '验证码登录',
         remember: '记住密码',
         getCode: '获取验证码',
-        signup: '注册会员',
+        signuptitle: '注册会员',
         com:'公司'
     }
 }

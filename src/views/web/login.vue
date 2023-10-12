@@ -85,8 +85,8 @@
                   <el-button
                     @click="getVerCode('login')"
                     :disabled="disable"
-                    style="font-size: 15px;"
-                    >{{ buttonName }}</el-button
+                    style="font-size: 10px"
+                    >{{ $t('login.getCode') }}</el-button
                   >
                 </div>
                 <div class="btn" @click="execlogin()">
@@ -99,11 +99,67 @@
             <div class="table">
               <div class="table-cell">
                 <div class="title1">
-                  <h2>{{ $t("login.signup") }}</h2>
+                  <h2>{{ $t("login.signuptitle") }}</h2>
                 </div>
-                <!-- <validateForm></validateForm> -->
-                
-                <input
+                <el-form
+                  :model="registryform"
+                  status-icon
+                  :rules="rules"
+                  ref="ruleForm"
+                  label-width="30.5%"
+                >
+                  <el-form-item prop="username">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.username')"
+                      type="text"
+                      v-model="registryform.username"
+                      autocomplete="off"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="password">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.password')"
+                      type="password"
+                      v-model="registryform.password"
+                      autocomplete="off"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="company">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.com')"
+                      v-model="registryform.company"
+                      type="text"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="userRealName">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.fullname')"
+                      v-model="registryform.userRealName"
+                      type="text"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="email">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.email')"
+                      v-model="registryform.email"
+                      type="text"
+                    ></el-input>
+                  </el-form-item>
+                  <el-form-item prop="phone">
+                    <el-input
+                      class="valid"
+                      :placeholder="$t('login.tele')"
+                      v-model.number="registryform.phone"
+                      type="number"
+                    ></el-input>
+                  </el-form-item>
+                </el-form>
+                <!-- <input
                   name="username"
                   :placeholder="$t('login.username')"
                   type="text"
@@ -135,7 +191,7 @@
                   :placeholder="$t('login.tele')"
                   type="number"
                   v-model="registryform.phone"
-                />
+                /> -->
                 <div class="vcode">
                   <el-input
                     :placeholder="$t('login.verifyCode')"
@@ -146,8 +202,8 @@
                   <el-button
                     @click="getVerCode('signup')"
                     :disabled="disable"
-                    style="font-size: 15px"
-                    >{{ buttonName }}</el-button
+                    style="font-size: 10px"
+                    >{{ $t('login.getCode') }}</el-button
                   >
                 </div>
                 <div class="btn" @click="execsignup()">
@@ -167,10 +223,50 @@ import AwHeader from "../../components/web/public/Header";
 // import validateForm from "../../components/web/validateForm"
 import { passwordLogin, vcodeLogin, getVerifyCode, registry } from "@/api/auth";
 
-
 export default {
   data() {
     return {
+      rules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 5, max: 16, message: "用户名长度应为5-16位", trigger: "blur" },
+          {
+            pattern: /^[^!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/,
+            message: "用户名不能包含特殊字符",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 8, max: 16, message: "密码长度应为8-16位", trigger: "blur" },
+          {
+            pattern: /^[^!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+$/,
+            message: "密码不能包含特殊字符",
+            trigger: "blur",
+          },
+          {
+            pattern: /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{8,16}$/,
+            message: "密码必须包含数字和字母",
+            trigger: "blur",
+          },
+        ],
+        // company: [{ validator: validUsername, trigger: "blur" }],
+        userRealName: [
+          { required: true, message: "真实姓名不能为空", trigger: "blur" },
+        ],
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { type: "email", message: "邮箱格式不正确", trigger: "blur" },
+        ],
+        phone: [
+          { required: true, message: "请输入手机号", trigger: "blur" },
+          {
+            pattern: /^1[3456789]\d{9}$/,
+            message: "手机号格式不正确",
+            trigger: "blur",
+          },
+        ],
+      },
       isLogIn: false,
       isFormActive: false,
       flag: true,
@@ -243,10 +339,13 @@ export default {
     },
     execsignup() {
       registry(this.registryform).then((res) => {
-        console.log(`output->res`, res);
+        // console.log(`output->`,'nihai')
+        // console.log(`output->res`, res);
         if (res.data.code == 200) {
           this.$message.success(res.data.msg);
           this.activateContainer();
+        }else{
+          this.$message.error(res.data.msg)
         }
       });
     },
@@ -376,6 +475,12 @@ export default {
   margin-top: -15%;
   // text-align:center
 }
+.el-form-item {
+  width: 80%;
+  margin-left: -2%;
+  // height: 30px;
+}
+
 .checkbox {
   // margin-top: 2%;
   margin-left: 50%;
@@ -408,8 +513,12 @@ export default {
 ::v-deep input::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
 }
-::v-deep input[type='number'] {
+::v-deep input[type="number"] {
   -moz-appearance: textfield !important;
+}
+
+.valid {
+  height: 36.3px;
 }
 
 .table {
@@ -426,15 +535,15 @@ export default {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
-
+//背景板hw
 .container {
   position: relative;
-  width: 45%;
+  width: 50%;
   margin: 30px auto 0;
-  height: 40%;
+  height: 50%;
   background-color: #999ade;
   top: 10%;
-  margin-top: 20vh;
+  margin-top: 15vh;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -543,13 +652,14 @@ export default {
   padding-left: 55px;
   padding-right: 0;
 }
+//移动页面
 .container .container-form {
   overflow: hidden;
   position: absolute;
   left: 10%; //移动页面的位置
-  top: -60%;
-  width: 48%;
-  height: 280%; //移动页面的宽高
+  top: -28%;
+  width: 45%;
+  height: 240%; //移动页面的宽高
   background-color: #fff;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
   -moz-transition: all 0.5s;
@@ -604,8 +714,9 @@ export default {
   width: 700px;
   height: 400px; //点击之后左侧滑块大小位置
 }
+//点击之后移动页面位置
 .container.log-in .container-form {
-  left: 42%;
+  left: 45%;
 }
 .container.log-in .container-form .form-item.sign-up {
   left: 0;

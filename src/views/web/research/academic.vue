@@ -151,7 +151,7 @@ export default {
     getPaperList() {
       this.loading = true;
       getPaper().then((res) => {
-        console.log(`output->res`,res)
+        // console.log(`output->res`,res)
         this.paperData = res.data.rows;
         this.queryData = this.paperData;
         this.total = this.paperData.length;

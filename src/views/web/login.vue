@@ -85,8 +85,13 @@
                   <el-button
                     @click="getVerCode('login')"
                     :disabled="disable"
+<<<<<<< HEAD
                     style="font-size: 10px"
                     >{{ $t('login.getCode') }}</el-button
+=======
+                    style="font-size: 15px"
+                    >{{ buttonName }}</el-button
+>>>>>>> 62356b1e5aa14d79c001ce1b8b533924f7f1f376
                   >
                 </div>
                 <div class="btn" @click="execlogin()">

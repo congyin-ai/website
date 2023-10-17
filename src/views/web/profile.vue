@@ -6,9 +6,7 @@
         <div class="card-header">
           <div
             class="card-cover"
-            style="
-              background-image: url('https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80');
-            "
+            
           ></div>
           <img
             class="card-avatar"
@@ -20,11 +18,12 @@
         </div>
         <div class="card-main">
             <div class="card-content">
-              <div class="card-subtitle">联系方式</div>
-              <div> 邮箱：<span class="card-desc">
+              <div class="card-subtitle">{{$t('profile.contact')}}</div>
+              <div> {{$t('profile.email')}}:<span class="card-desc">
                 {{userData.email}}
               </span></div>
-              电话：<span class="card-desc">{{userData.phone}}</span>
+              <div>{{$t('profile.tele')}}:<span class="card-desc">{{userData.phone}}</span></div>
+              <div>{{$t('profile.com')}}:<span class="card-desc">{{userData.company}}</span></div>
           </div>
         </div>
       </div>
@@ -41,23 +40,16 @@ export default {
   },
   data() {
     return {
-      // userData:{
-      //   username:'chd',
-      //   fullname:'congin',
-      //   email:'1024130664@qq.com',
-      //   phone:'111111111'
-      // }
-      userData:undefined
+      userData:this.$store.state.auth.userData
     };
   },
 
-  methods: {
-
-  },
-  mounted(){
-    this.userData=this.$store.state.auth.userData
-    // console.log(`output->this.userData`,this.userData)
-  }
+  // methods: {
+  // },
+  // mounted(){
+  //   this.userData=this.$store.state.auth.userData
+  //   console.log(`output->this.userData`,this.userData)
+  // }
 };
 </script>
 
@@ -113,6 +105,7 @@ export default {
   filter: blur(30px);
   transform: scale(1.2);
   transition: 0.5s;
+  background-image: url('../../assets/img/index/background.png');
 }
 
 .card-avatar {

@@ -19,11 +19,20 @@ export function removeToken() {
 const UserData = 'userData'
 
 export function getUserData() {
-    // console.log(`output->`,'调用了getToken')
-    return Cookies.get(UserData)
+    // console.log(`output->get`, JSON.parse(Cookies.get(UserData)) )
+    // console.log(`output->`,userData)
+    const userData = Cookies.get(UserData)
+    if (userData) {
+        return JSON.parse(userData)
+    } else {
+        return null
+    }
+
 }
 
 export function setUserData(userData) {
+    console.log(`output->setdata`)
+    console.log(`output->`,userData)
     return Cookies.set(UserData, userData)
 }
 

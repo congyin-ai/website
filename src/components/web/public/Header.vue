@@ -92,7 +92,7 @@
                 style="cursor: pointer; font-size: 12px; color: #5356ad"
                 @click="exitLogin"
               >
-                退出
+                {{$t('header.logout')}}
               </span>
             </el-menu-item>
             <!-- <div>index="/lang"</div> -->

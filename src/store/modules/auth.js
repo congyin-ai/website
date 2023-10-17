@@ -1,5 +1,7 @@
-import { passwordLogin, vcodeLogin, getInfo ,logOut} from '@/api/auth'
-import { getToken, setToken, removeToken ,getUserData } from '@/utils/auth'
+import { passwordLogin, vcodeLogin, getInfo, logOut } from '@/api/auth'
+import { getToken, setToken, removeToken, getUserData,setUserData } from '@/utils/auth'
+import { Message } from 'element-ui'
+import { removeUserData } from '../../utils/auth'
 const auth = {
     state: {
         token: getToken(),
@@ -40,9 +42,14 @@ const auth = {
             return new Promise((resolve, reject) => {
                 passwordLogin(username, password).then(
                     res => {
-                        setToken(res.data.token)
-                        commit('SET_TOKEN', res.data.token)
-                        resolve(res)
+                        if (res.data.code == 200) {
+                            setToken(res.data.token)
+                            commit('SET_TOKEN', res.data.token)
+                            resolve(res)
+                        } else
+                        {
+                            Message.error(res.data.msg);
+                            }
                     }
                 ).catch(err => reject(err))
             })
@@ -50,13 +57,22 @@ const auth = {
         VcodeLogin({ commit }, vcodeinfo) {
             const tele = vcodeinfo.tele
             const vcode = vcodeinfo.vcode
+            console.log(`output->tt1`)
             return new Promise((resolve, reject) => {
+                console.log(`output->tt2`)
                 vcodeLogin(tele, vcode).then(
                     res => {
-                        setToken(res.data.token)
-                        // console.log(`output->res1`, res)
-                        commit('SET_TOKEN', res.data.token)
-                        resolve(res)
+                        console.log(`output->res`,res)
+                        if (res.data.code == 200) {
+                            console.log(`output->tt3`, res)
+                            setToken(res.data.token)
+
+                            commit('SET_TOKEN', res.data.token)
+                            resolve(res)
+                        } else {
+                            Message.error(res.data.msg);
+                        }
+
                     }
                 ).catch(err => reject(err))
             })
@@ -66,6 +82,8 @@ const auth = {
                 getInfo().then(res => {
                     const user = res.data.user
                     // console.log(`output->user`, user)
+                    const userString = JSON.stringify(user);
+                    setUserData(userString)
                     commit('SET_USERDATA', user)
                     // const avatar = (user.avatar == "" || user.avatar == null) ? require("@/assets/images/profile.jpg") : user.avatar;
                     resolve(res)
@@ -79,12 +97,14 @@ const auth = {
         LogOut({ commit, state }) {
             return new Promise((resolve, reject) => {
                 logOut(state.token).then((res) => {
-                    console.log(`output->推出了已经！！！`)
-                    commit('SET_TOKEN', '')
-                    commit('SET_USERDATA', {})
-                    removeToken()
-                    resolve(res)
-                    
+                    if (res.data.code == 200) {
+                        console.log(`output->推出了已经！！！`)
+                        commit('SET_TOKEN', '')
+                        commit('SET_USERDATA', {})
+                        removeToken()
+                        removeUserData()
+                        resolve(res)
+                    }
                 }).catch(error => {
                     reject(error)
                 })

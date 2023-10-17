@@ -156,43 +156,9 @@
                       :placeholder="$t('login.tele')"
                       v-model="registryform.phone"
                       type="number"
-                      @change='titt'
                     ></el-input>
                   </el-form-item>
                 </el-form>
-                <!-- <input
-                  name="username"
-                  :placeholder="$t('login.username')"
-                  type="text"
-                  v-model="registryform.username"
-                />
-                <input
-                  name="password"
-                  :placeholder="$t('login.password')"
-                  type="password"
-                  v-model="registryform.password"
-                />
-                <input
-                  name="com"
-                  :placeholder="$t('login.com')"
-                  type="text"
-                  v-model="registryform.company"
-                /><input
-                  name="fullname"
-                  :placeholder="$t('login.fullname')"
-                  type="text"
-                  v-model="registryform.userRealName"
-                /><input
-                  name="email"
-                  :placeholder="$t('login.email')"
-                  type="text"
-                  v-model="registryform.email"
-                /><input
-                  name="tele"
-                  :placeholder="$t('login.tele')"
-                  type="number"
-                  v-model="registryform.phone"
-                /> -->
                 <div class="vcode">
                   <el-input
                     :placeholder="$t('login.verifyCode')"
@@ -301,10 +267,6 @@ export default {
   },
 
   methods: {
-    titt(value){
-      console.log(`output->`,this.registryform.phone.length)
-
-    },
     toggleContainer() {
       this.isLogIn = !this.isLogIn;
     },
@@ -331,37 +293,28 @@ export default {
         loginform.username = this.passwordform.username;
         loginform.password = this.passwordform.password;
         this.$store.dispatch("PasswordLogin", loginform).then((res) => {
-          console.log(`output->res2`, res);
-          if (res.data.code == 200) {
-            this.$message.success(res.data.msg);
-            this.activateContainer();
-          } else {
-            this.$message(res.data.msg);
-          }
+          this.activateContainer();
         });
       } else {
         const vcodeform = {};
         vcodeform.tele = this.vcodeform.tele;
         vcodeform.vcode = this.vcodeform.vcode;
         this.$store.dispatch("VcodeLogin", vcodeform).then((res) => {
-          // console.log(`output->res`, res);
-          if (res.data.code == 200) {
-            this.$message.success(res.data.msg);
-            this.activateContainer();
-          } else {
-            this.$message.error(res.data.msg);
-          }
+          this.activateContainer();
         });
       }
       // 其他登录逻辑...
     },
     execsignup() {
       registry(this.registryform).then((res) => {
-        // console.log(`output->`,'nihai')
-        console.log(`output->res`, res);
         if (res.data.code == 200) {
-          this.$message.success(res.data.msg);
-          this.activateContainer();
+          this.$message.success("注册成功");
+          const loginform = {};
+          loginform.username = this.registryform.username;
+          loginform.password = this.registryform.password;
+          this.$store.dispatch("PasswordLogin", loginform).then(() => {
+            this.activateContainer();
+          });
         } else {
           this.$message.error(res.data.msg);
         }
@@ -412,7 +365,6 @@ export default {
             type: "warning",
           });
         } else if (this.vcodeform.tele.length != 11) {
-          console.log(`output->`,this.vcodeform.tele.length)
           this.$message({
             message: "请输入11位的手机号码",
             type: "warning",

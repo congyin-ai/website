@@ -14,6 +14,7 @@ const zh = {
             sub2: '合作伙伴',
             sub3:'加入我们'
         },
+        logout:'退出'
     },
     footer: {
         title: '葱因智能',
@@ -89,6 +90,12 @@ const zh = {
         getCode: '获取验证码',
         signuptitle: '注册会员',
         com:'公司'
+    },
+    profile: {
+        contact: '联系方式',
+        email: '邮箱',
+        tele: '电话',
+        com: '公司'
     }
 }
 export default zh;

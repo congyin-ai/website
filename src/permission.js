@@ -31,6 +31,12 @@ router.beforeEach((to, from, next) => {
     }
   } else if (from.name=='profile'&&to.name == 'login') {
     next('/profile')
+  } else if(to.name=='profile') {
+    if (getToken()) {
+      next()
+    } else {
+      next('/')
+    }
   } else {
     next()
   }

@@ -14,6 +14,7 @@ const en = {
             sub2: 'Partners',
             sub3:'Join us'
         },
+        logout:'logout'
     },
     footer: {
         title: 'Congin',
@@ -87,7 +88,13 @@ const en = {
         remember: 'Remember me',
         getCode: 'Get Verify Code',
         signuptitle: 'Registered Member',
-        
+        com:'company'
+    },
+    profile: {
+        contact: 'contact ways',
+        email: 'email',
+        tele: 'tele',
+        com:'company'
     }
     
 }

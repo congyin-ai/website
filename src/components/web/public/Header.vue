@@ -52,7 +52,7 @@
                 $t("header.us.sub3")
               }}</el-menu-item>
             </el-submenu>
-            <el-menu-item index="/login" style="float: right"
+            <el-menu-item index="/login" style="float: right" v-if="userData==null"
               ><svg
                 t="1695479955878"
                 class="icon"
@@ -69,6 +69,32 @@
                   p-id="5605"
                 ></path></svg
             ></el-menu-item>
+            <el-menu-item v-if="userData!=null" index="/profile" style="float: right">
+              <span>
+                <img
+                  src="@/assets/img/index/app1.jpg"
+                  style="
+                    cursor: pointer;
+                    border-radius: 20px;
+                    height: 25px;
+                    width: 25px;
+                  "
+              /></span>
+              <span style="margin-right: 12%; margin-left: 3%">
+                {{
+                  userData.username.length > 3
+                    ? userData.username.substring(0, 3) + "..."
+                    : userData.username
+                }}
+              </span>
+              <!-- 退出,鼠标移到到该位置变小手 -->
+              <span
+                style="cursor: pointer; font-size: 12px; color: #5356ad"
+                @click="exitLogin"
+              >
+                退出
+              </span>
+            </el-menu-item>
             <!-- <div>index="/lang"</div> -->
             <el-submenu style="float: right" index="lang">
               <template slot="title"
@@ -104,11 +130,16 @@
 
 <script>
 import { mapState } from "vuex";
-
+// import { logOut } from "@/api/auth";
 export default {
   name: "Header",
   data() {
     return {
+      // userData: {
+      //   username:'12345',
+      //   fullname:'123',
+      // },
+      userData:this.$store.state.auth.userData,
       lan: "",
       activeIndex: "1",
       activeIndex2: "1",
@@ -190,17 +221,23 @@ export default {
       "navDarkActive",
     ]),
   },
+  
   // beforeCreate() {
   //   console.log(this.$i18n.locale); //zh
   //   console.log(localStorage.getItem("locale")); //zh
   // },
   created() {
+    // console.log(`output->this.userData`,this.userData)
     this.lan = this.$i18n.locale; //$i18n在实例刚创建完成就有了，这不是$el要在mounted时才能取到
+    // this.userData = JSON.parse(sessionStorage.getItem("userData"))
     // console.log(this.$i18n.locale); //zh
     // console.log(localStorage.getItem("locale")); //zh
   },
 
-  mounted() {},
+  // mounted() {
+  //   console.log(`output->data`,this.$store.state.auth.userData)
+  //   console.log(`output->token`,this.$store.state.auth.token)
+  // },
   methods: {
     changeType(type) {
       // 此处做了语言选择记录，存在localStorage中，这里的作用只有一个当我重新请求页面
@@ -214,6 +251,18 @@ export default {
       localStorage.setItem("locale", type);
       this.$i18n.locale = type; // 修改页面需要显示的语言
       this.lan = this.$i18n.locale;
+    },
+    exitLogin() {
+      this.$store.dispatch('LogOut').then((res) => {
+        if (res.data.code == 200) {
+          // sessionStorage.removeItem("Admin-Token");
+          // sessionStorage.removeItem("userData");
+          this.$message.success("退出成功");
+          window.location.href = "/";
+        }else{
+          console.log("退出失败")
+        }
+      });
     },
   },
 };
@@ -323,7 +372,7 @@ h2 {
 }
 </style>
 <style>
-.el-menu--popup{
+.el-menu--popup {
   min-width: 150px !important;
   border-radius: 10px !important;
 }

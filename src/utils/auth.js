@@ -14,3 +14,19 @@ export function setToken(token) {
 export function removeToken() {
     return Cookies.remove(TokenKey)
 }
+
+
+const UserData = 'userData'
+
+export function getUserData() {
+    // console.log(`output->`,'调用了getToken')
+    return Cookies.get(UserData)
+}
+
+export function setUserData(userData) {
+    return Cookies.set(UserData, userData)
+}
+
+export function removeUserData() {
+    return Cookies.remove(UserData)
+}

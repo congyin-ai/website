@@ -16,7 +16,9 @@ export function getDetailedNews(query){
     return instance({
       url: '/web/news/web/'+ query,
       method: 'get',
-      
+      headers: {
+        isToken: false
+      },
     })
 }
 
@@ -25,6 +27,7 @@ export function listPaper() {
     method: 'post',
     headers: { 
       'Content-Type': 'application/json', 
+      isToken: false
    },
     // dataType: 'json',
     url: '/thesis/list',

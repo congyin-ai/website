@@ -42,6 +42,16 @@ export function registry(data) {
   })
 }
 
+export function getInfo() {
+  return instance({
+    url: '/getUserInfo',
+    headers: {
+      isToken: true
+    },
+    method:'get'
+  })
+}
+
 export function getVerifyCode(phone, type) {
   const data = {
     phone,
@@ -54,5 +64,15 @@ export function getVerifyCode(phone, type) {
     // },
     method: 'post',
     data: data
+  })
+}
+
+export function logOut() {
+  return instance({
+    url: '/logout',
+    headers: {
+      isToken: true
+    },
+    method: 'get',
   })
 }

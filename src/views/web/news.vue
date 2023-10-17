@@ -284,7 +284,7 @@ export default {
 }
 
 .box {
-  padding-top: 60px;
+  padding-top: 6vh;
   //background: url("../../assets/img/news/bg_02.jpg");
   //background-size: cover;
 }

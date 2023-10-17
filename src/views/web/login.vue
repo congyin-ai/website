@@ -85,13 +85,8 @@
                   <el-button
                     @click="getVerCode('login')"
                     :disabled="disable"
-<<<<<<< HEAD
                     style="font-size: 10px"
-                    >{{ $t('login.getCode') }}</el-button
-=======
-                    style="font-size: 15px"
-                    >{{ buttonName }}</el-button
->>>>>>> 62356b1e5aa14d79c001ce1b8b533924f7f1f376
+                    >{{ $t("login.getCode") }}</el-button
                   >
                 </div>
                 <div class="btn" @click="execlogin()">
@@ -159,8 +154,9 @@
                     <el-input
                       class="valid"
                       :placeholder="$t('login.tele')"
-                      v-model.number="registryform.phone"
+                      v-model="registryform.phone"
                       type="number"
+                      @change='titt'
                     ></el-input>
                   </el-form-item>
                 </el-form>
@@ -208,7 +204,7 @@
                     @click="getVerCode('signup')"
                     :disabled="disable"
                     style="font-size: 10px"
-                    >{{ $t('login.getCode') }}</el-button
+                    >{{ $t("login.getCode") }}</el-button
                   >
                 </div>
                 <div class="btn" @click="execsignup()">
@@ -226,9 +222,10 @@
 <script>
 import AwHeader from "../../components/web/public/Header";
 // import validateForm from "../../components/web/validateForm"
-import { passwordLogin, vcodeLogin, getVerifyCode, registry } from "@/api/auth";
-
+import { vcodeLogin, getVerifyCode, registry, getInfo } from "@/api/auth";
+// import router from '@/router'
 export default {
+  name: "login",
   data() {
     return {
       rules: {
@@ -304,11 +301,24 @@ export default {
   },
 
   methods: {
+    titt(value){
+      console.log(`output->`,this.registryform.phone.length)
+
+    },
     toggleContainer() {
       this.isLogIn = !this.isLogIn;
     },
     activateContainer() {
-      this.isFormActive = true;
+      this.$store.dispatch("GetInfo").then((res) => {
+        if (res.data.code == 200) {
+          this.isFormActive = true;
+          setTimeout(() => {
+            this.$nextTick(() => {
+              this.$router.push("/profile");
+            });
+          }, 1500);
+        }
+      });
     },
     switchlogin() {
       this.flag = !this.flag;
@@ -317,11 +327,11 @@ export default {
       // 执行登录逻辑
       if (this.flag == true) {
         this.getSavedLoginfo();
-        passwordLogin(
-          this.passwordform.username,
-          this.passwordform.password
-        ).then((res) => {
-          console.log(`output->res`, res);
+        const loginform = {};
+        loginform.username = this.passwordform.username;
+        loginform.password = this.passwordform.password;
+        this.$store.dispatch("PasswordLogin", loginform).then((res) => {
+          console.log(`output->res2`, res);
           if (res.data.code == 200) {
             this.$message.success(res.data.msg);
             this.activateContainer();
@@ -330,7 +340,10 @@ export default {
           }
         });
       } else {
-        vcodeLogin(this.vcodeform.tele, this.vcodeform.vcode).then((res) => {
+        const vcodeform = {};
+        vcodeform.tele = this.vcodeform.tele;
+        vcodeform.vcode = this.vcodeform.vcode;
+        this.$store.dispatch("VcodeLogin", vcodeform).then((res) => {
           // console.log(`output->res`, res);
           if (res.data.code == 200) {
             this.$message.success(res.data.msg);
@@ -345,12 +358,12 @@ export default {
     execsignup() {
       registry(this.registryform).then((res) => {
         // console.log(`output->`,'nihai')
-        // console.log(`output->res`, res);
+        console.log(`output->res`, res);
         if (res.data.code == 200) {
           this.$message.success(res.data.msg);
           this.activateContainer();
-        }else{
-          this.$message.error(res.data.msg)
+        } else {
+          this.$message.error(res.data.msg);
         }
       });
     },
@@ -399,6 +412,7 @@ export default {
             type: "warning",
           });
         } else if (this.vcodeform.tele.length != 11) {
+          console.log(`output->`,this.vcodeform.tele.length)
           this.$message({
             message: "请输入11位的手机号码",
             type: "warning",
@@ -431,7 +445,7 @@ export default {
           });
         } else {
           getVerifyCode(this.registryform.phone, 0).then((res) => {
-            console.log(`output->res`, res);
+            // console.log(`output->res`, res);
             if (res.data.code == 200) {
               this.$message.success(res.data.msg);
               this.disableBtn();
@@ -662,9 +676,9 @@ export default {
   overflow: hidden;
   position: absolute;
   left: 10%; //移动页面的位置
-  top: -28%;
+  top: -30%;
   width: 45%;
-  height: 240%; //移动页面的宽高
+  height: 260%; //移动页面的宽高
   background-color: #fff;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
   -moz-transition: all 0.5s;

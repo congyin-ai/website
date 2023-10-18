@@ -31,8 +31,6 @@ export function getUserData() {
 }
 
 export function setUserData(userData) {
-    console.log(`output->setdata`)
-    console.log(`output->`,userData)
     return Cookies.set(UserData, userData)
 }
 

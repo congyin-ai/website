@@ -62,11 +62,8 @@ const auth = {
                 console.log(`output->tt2`)
                 vcodeLogin(tele, vcode).then(
                     res => {
-                        console.log(`output->res`,res)
                         if (res.data.code == 200) {
-                            console.log(`output->tt3`, res)
                             setToken(res.data.token)
-
                             commit('SET_TOKEN', res.data.token)
                             resolve(res)
                         } else {

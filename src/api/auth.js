@@ -6,7 +6,7 @@ export function passwordLogin(username, password) {
     password,
   }
   return instance({
-    url: '/login',
+    url: '/pwdLogin',
     // headers: {
     //   isToken: false
     // },

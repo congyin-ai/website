@@ -14,11 +14,11 @@
             alt="avatar"
           />
           <h1 class="card-fullname">{{userData.fullname}}</h1>
-          <h2 class="card-jobtitle">{{userData.username}}</h2>
+          <h2 class="card-username">{{userData.username}}</h2>
         </div>
         <div class="card-main">
             <div class="card-content">
-              <div class="card-subtitle">{{$t('profile.contact')}}</div>
+              <div class="card-contact">{{$t('profile.contact')}}</div>
               <div> {{$t('profile.email')}}:<span class="card-desc">
                 {{userData.email}}
               </span></div>
@@ -133,7 +133,7 @@ export default {
   transform: translateY(-10px) translateX(-50%);
   left: 50%;
 }
-.card-jobtitle {
+.card-username {
   position: absolute;
   bottom: 0;
   font-size: 11px;
@@ -147,15 +147,7 @@ export default {
   transform: translateX(-50%) translateY(-7px);
 }
 
-.card-main {
-  position: relative;
-  flex: 1;
-  display: flex;
-  padding-top: 10px;
-  flex-direction: column;
-}
-
-.card-subtitle {
+.card-contact {
   font-weight: 700;
   font-size: 13px;
   margin-bottom: 8px;

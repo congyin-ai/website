@@ -3,7 +3,7 @@
     <AwHeader class="exp_header" ref="exp_header"></AwHeader>
     <div class="box">
 
-      <h1 class="hint">请登录后查看</h1>
+      <h1 class="hint">您已成功登录，功能正在开发中......</h1>
     </div>
     <AwFooter></AwFooter>
   </div>

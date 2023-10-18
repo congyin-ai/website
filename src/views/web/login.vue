@@ -56,9 +56,9 @@
                     class="checkbox"
                   />&nbsp<span>{{ $t("login.remember") }}</span>
                 </div>
-                <div class="btn" @click="execlogin()">
+                <div style="text-align:center"><el-button class="btn" :disabled='isDisabled' @click="execlogin()">
                   {{ $t("login.login") }}
-                </div>
+                </el-button></div>
               </div>
               <div class="table-cell" v-show="!flag">
                 <div class="title1">
@@ -86,12 +86,12 @@
                     @click="getVerCode('login')"
                     :disabled="disable"
                     style="font-size: 10px"
-                    >{{ $t("login.getCode") }}</el-button
+                    >{{buttonName}}</el-button
                   >
                 </div>
-                <div class="btn" @click="execlogin()">
+                <div style="text-align:center"><el-button class="btn" :disabled='isDisabled' @click="execlogin()">
                   {{ $t("login.login") }}
-                </div>
+                </el-button></div>
               </div>
             </div>
           </div>
@@ -170,12 +170,12 @@
                     @click="getVerCode('signup')"
                     :disabled="disable"
                     style="font-size: 10px"
-                    >{{ $t("login.getCode") }}</el-button
+                    >{{ buttonName }}</el-button
                   >
                 </div>
-                <div class="btn" @click="execsignup()">
+                <div style="text-align:center"><el-button class="btn" :disabled='isDisabled' @click="execsignup()">
                   {{ $t("login.signup") }}
-                </div>
+                </el-button></div>
               </div>
             </div>
           </div>
@@ -194,6 +194,8 @@ export default {
   name: "login",
   data() {
     return {
+      disabled:false,
+      isLocked:false,
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -257,7 +259,8 @@ export default {
         smsCode: "",
       },
       disable: false,
-      buttonName: this.$t("login.getCode"),
+      // buttonName: this.$t("login.getCode"),
+      buttonName:'获取验证码',
       count: 59,
     };
   },
@@ -265,7 +268,11 @@ export default {
     AwHeader,
     // validateForm
   },
-
+  computed:{
+    isDisabled(){
+      return this.disabled
+    }
+  },
   methods: {
     toggleContainer() {
       this.isLogIn = !this.isLogIn;
@@ -286,13 +293,19 @@ export default {
       this.flag = !this.flag;
     },
     execlogin() {
-      // 执行登录逻辑
+      if(this.isLocked){
+        return
+      }
+      this.disabled=true
+      this.isLocked=true
       if (this.flag == true) {
         this.getSavedLoginfo();
         const loginform = {};
         loginform.username = this.passwordform.username;
         loginform.password = this.passwordform.password;
         this.$store.dispatch("PasswordLogin", loginform).then((res) => {
+          this.disabled=false;
+          this.isLocked=false;
           this.activateContainer();
         });
       } else {
@@ -300,10 +313,12 @@ export default {
         vcodeform.tele = this.vcodeform.tele;
         vcodeform.vcode = this.vcodeform.vcode;
         this.$store.dispatch("VcodeLogin", vcodeform).then((res) => {
+          this.disabled=false;
+          this.isLocked=false;
           this.activateContainer();
         });
       }
-      // 其他登录逻辑...
+
     },
     execsignup() {
       registry(this.registryform).then((res) => {
@@ -313,6 +328,8 @@ export default {
           loginform.username = this.registryform.username;
           loginform.password = this.registryform.password;
           this.$store.dispatch("PasswordLogin", loginform).then(() => {
+            this.disabled=false;
+            this.isLocked=false;
             this.activateContainer();
           });
         } else {
@@ -358,7 +375,6 @@ export default {
     },
     getVerCode(type) {
       if (type == "login") {
-        console.log("*", this.vcodeform.tele.length);
         if (this.vcodeform.tele == "") {
           this.$message({
             message: "手机号不能为空",
@@ -371,7 +387,6 @@ export default {
           });
         } else {
           getVerifyCode(this.vcodeform.tele, 1).then((res) => {
-            console.log(`output->res`, res);
             if (res.data.code == 200) {
               this.$message.success(res.data.msg);
               this.disableBtn();
@@ -384,7 +399,6 @@ export default {
           // console.log("点击了", this.disable);
         }
       } else {
-        console.log("*", this.registryform.phone.length);
         if (this.registryform.phone == "") {
           this.$message({
             message: "手机号不能为空",
@@ -655,6 +669,7 @@ export default {
   position: relative;
   box-shadow: 0 0 10px 1px #ff73b3;
   margin-top: 40px; //按钮margin-top
+  // text-align: center;
 }
 .container .form-item {
   position: absolute;

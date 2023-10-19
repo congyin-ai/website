@@ -38,17 +38,22 @@
                     >
                   </h3>
                 </div>
-                <input
+                <div style="text-align:center;">
+                <el-input
                   name="username"
+                  class="valid1"
                   :placeholder="$t('login.username')"
                   type="text"
                   v-model="passwordform.username"
-                /><input
+                /><el-input
                   name="Password"
+                  class="valid1"
                   :placeholder="$t('login.password')"
-                  type="Password"
+                  type="password"
+                  show-password
                   v-model="passwordform.password"
                 />
+                </div>
                 <div>
                   <input
                     type="checkbox"
@@ -122,6 +127,7 @@
                       class="valid"
                       :placeholder="$t('login.password')"
                       type="password"
+                      show-password
                       v-model="registryform.password"
                       autocomplete="off"
                     ></el-input>
@@ -505,6 +511,12 @@ export default {
 .valid {
   height: 36.3px;
 }
+.valid1{
+  height: 36.3px;
+  width: 55%;
+  // margin-left: 22.5%;
+  margin-bottom: 5%;
+}
 
 .table {
   display: table;
@@ -592,7 +604,7 @@ export default {
   margin: 0 auto 20px;
   display: block;
   width: 50%; //input width
-  height: 3%;
+  height: 4%;
   font-size: 15px;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
